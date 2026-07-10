@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // 3. HANDLE LOGIN SUBMISSION
   // =========================================
   if (loginForm) {
-    loginForm.addEventListener('submit', function (event) {
+    loginForm.addEventListener('submit', async function (event) {
       event.preventDefault(); // Stop page refresh
 
       const email = emailInput.value.trim();
@@ -70,8 +70,13 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!isValid) return;
 
       // =========================================
-      // CHECK LOCAL STORAGE FOR USER
+      // CHECK DATABASE / LOCAL STORAGE FOR USER
       // =========================================
+      // Sync users from Supabase if available
+      if (typeof dbGetUsers === 'function') {
+        await dbGetUsers();
+      }
+
       // Get all registered users (an array of objects)
       const users = getFromStorage('shopverse_users') || [];
 

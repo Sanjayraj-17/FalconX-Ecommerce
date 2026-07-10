@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // 4. HANDLE SIGNUP SUBMISSION
   // =========================================
   if (signupForm) {
-    signupForm.addEventListener('submit', function (event) {
+    signupForm.addEventListener('submit', async function (event) {
       event.preventDefault();
 
       const name = nameInput.value.trim();
@@ -111,8 +111,13 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!isValid) return;
 
       // =========================================
-      // SAVE TO LOCAL STORAGE
+      // SAVE TO DATABASE & LOCAL STORAGE
       // =========================================
+      // Sync users from Supabase if available
+      if (typeof dbGetUsers === 'function') {
+        await dbGetUsers();
+      }
+
       const users = getFromStorage('shopverse_users') || [];
 
       // Check if email is already registered
@@ -133,9 +138,14 @@ document.addEventListener('DOMContentLoaded', function () {
         joinDate: new Date().toISOString()
       };
 
-      // Add to array and save
+      // Add to array and save locally
       users.push(newUser);
       saveToStorage('shopverse_users', users);
+
+      // Save to Supabase as well
+      if (typeof dbSaveUser === 'function') {
+        await dbSaveUser(newUser);
+      }
 
       // Auto-login the new user
       const sessionUser = {

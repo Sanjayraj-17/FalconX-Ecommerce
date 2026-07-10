@@ -17,11 +17,18 @@ document.addEventListener('DOMContentLoaded', function () {
   // =========================================
   // 2. FETCH PRODUCT DATA FROM LOCAL STORAGE
   // =========================================
-  const allProducts = getFromStorage('shopverse_products') || [];
+  const allProducts = typeof getFromStorage === 'function' ? getFromStorage('shopverse_products') : [];
   const product = allProducts.find(p => p.id === productId);
 
   // If product not found, show error
   if (!product) {
+    document.addEventListener('supabase_products_synced', function () {
+      const updatedProducts = typeof getFromStorage === 'function' ? getFromStorage('shopverse_products') : [];
+      if (updatedProducts.some(p => p.id === productId)) {
+        window.location.reload();
+      }
+    });
+
     document.getElementById('productContainer').innerHTML = `
       <div class="no-results" style="margin-top: 50px;">
         <div class="no-results-icon">⚠️</div>

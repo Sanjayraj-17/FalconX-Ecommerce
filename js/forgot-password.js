@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // 5. STEP 1: HANDLE REQUEST RESET (EMAIL VERIFICATION)
   // =========================================
   if (requestForm) {
-    requestForm.addEventListener('submit', function (event) {
+    requestForm.addEventListener('submit', async function (event) {
       event.preventDefault(); // Stop page reload
 
       const email = emailInput.value.trim();
@@ -102,6 +102,11 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!email.includes('@') || !email.includes('.')) {
         showError(emailInput, 'emailError');
         return;
+      }
+
+      // Sync users from Supabase if available
+      if (typeof dbGetUsers === 'function') {
+        await dbGetUsers();
       }
 
       // Read registered users from Local Storage
@@ -143,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // 6. STEP 2: VERIFY CODE AND SET NEW PASSWORD
   // =========================================
   if (resetForm) {
-    resetForm.addEventListener('submit', function (event) {
+    resetForm.addEventListener('submit', async function (event) {
       event.preventDefault(); // Stop page reload
 
       const codeVal = codeInput.value.trim();
@@ -178,6 +183,11 @@ document.addEventListener('DOMContentLoaded', function () {
         
         // Save the updated users array back to Local Storage
         saveToStorage('shopverse_users', users);
+
+        // Update in Supabase as well
+        if (typeof dbSaveUser === 'function') {
+          await dbSaveUser(users[userIndex]);
+        }
 
         showToast('Password reset successfully! Redirecting to login...', 'success');
 

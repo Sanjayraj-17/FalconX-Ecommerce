@@ -275,6 +275,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     var products = getFromStorage('shopverse_products') || getDefaultProducts();
+    var targetProduct = null;
 
     if (editId) {
       // UPDATE existing product
@@ -288,12 +289,13 @@ document.addEventListener('DOMContentLoaded', function () {
         products[idx].rating = rating;
         products[idx].image = image;
         products[idx].description = description;
+        targetProduct = products[idx];
         showAdminToast('Product updated successfully!', 'success');
       }
     } else {
       // ADD new product
       var newId = products.length > 0 ? Math.max.apply(null, products.map(function (p) { return p.id; })) + 1 : 1;
-      products.push({
+      targetProduct = {
         id: newId,
         name: name,
         price: price,
@@ -302,11 +304,18 @@ document.addEventListener('DOMContentLoaded', function () {
         rating: rating,
         image: image,
         description: description
-      });
+      };
+      products.push(targetProduct);
       showAdminToast('Product added successfully!', 'success');
     }
 
     saveToStorage('shopverse_products', products);
+    
+    // Sync change to Supabase database
+    if (targetProduct && typeof dbSaveProduct === 'function') {
+      dbSaveProduct(targetProduct);
+    }
+
     closeModal();
     loadProducts();
   });
@@ -317,6 +326,12 @@ document.addEventListener('DOMContentLoaded', function () {
     var products = getFromStorage('shopverse_products') || getDefaultProducts();
     products = products.filter(function (p) { return p.id !== id; });
     saveToStorage('shopverse_products', products);
+    
+    // Sync deletion to Supabase database
+    if (typeof dbDeleteProduct === 'function') {
+      dbDeleteProduct(id);
+    }
+
     showAdminToast('Product deleted', 'info');
     loadProducts();
   }

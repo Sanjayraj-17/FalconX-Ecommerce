@@ -45,36 +45,43 @@ document.addEventListener('DOMContentLoaded', function () {
     saveToStorage('shopverse_products', initialProductsFallback);
   }
 
-  // Retrieve products array
-  const products = getFromStorage('shopverse_products') || [];
-
-  // =========================================
-  // 3. RENDER CATEGORIES CARDS
-  // =========================================
-  const gridContainer = document.getElementById('categoriesGrid');
-
-  // Clear skeletons loading indicators
-  gridContainer.innerHTML = '';
-
-  // Generate cards
-  categoriesList.forEach(cat => {
-    // Count how many products belong to this category
-    // We convert both to lowercase to prevent matching errors caused by capitalization differences
-    const count = products.filter(p => p.category.toLowerCase() === cat.name.toLowerCase()).length;
-
-    // Create the anchor element representation
-    const card = document.createElement('a');
-    card.href = `products.html?category=${encodeURIComponent(cat.name)}`;
-    card.className = 'category-card';
+  // Retrieve products array and render
+  function renderCategories() {
+    const products = typeof getFromStorage === 'function' ? getFromStorage('shopverse_products') : [];
+    const gridContainer = document.getElementById('categoriesGrid');
+    if (!gridContainer) return;
     
-    card.innerHTML = `
-      <span class="category-icon">${cat.icon}</span>
-      <h3 class="category-name">${cat.name}</h3>
-      <span class="category-count">${count} Item${count !== 1 ? 's' : ''}</span>
-    `;
+    // Clear skeletons loading indicators
+    gridContainer.innerHTML = '';
 
-    // Append card to grid container
-    gridContainer.appendChild(card);
+    // Generate cards
+    categoriesList.forEach(cat => {
+      // Count how many products belong to this category
+      // We convert both to lowercase to prevent matching errors caused by capitalization differences
+      const count = products.filter(p => p.category && p.category.toLowerCase() === cat.name.toLowerCase()).length;
+
+      // Create the anchor element representation
+      const card = document.createElement('a');
+      card.href = `products.html?category=${encodeURIComponent(cat.name)}`;
+      card.className = 'category-card';
+      
+      card.innerHTML = `
+        <span class="category-icon">${cat.icon}</span>
+        <h3 class="category-name">${cat.name}</h3>
+        <span class="category-count">${count} Item${count !== 1 ? 's' : ''}</span>
+      `;
+
+      // Append card to grid container
+      gridContainer.appendChild(card);
+    });
+  }
+
+  // Initial render
+  renderCategories();
+
+  // Listen for Supabase products synced event to refresh categories count
+  document.addEventListener('supabase_products_synced', function () {
+    renderCategories();
   });
 
 });

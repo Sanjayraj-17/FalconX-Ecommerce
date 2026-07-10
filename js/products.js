@@ -296,4 +296,13 @@ document.addEventListener('DOMContentLoaded', function () {
   // =========================================
   applyFiltersAndSort();
 
+  // Listen for Supabase products synced event to reload and re-render
+  document.addEventListener('supabase_products_synced', function () {
+    const updatedProducts = typeof getFromStorage === 'function' ? getFromStorage('shopverse_products') : null;
+    if (updatedProducts && updatedProducts.length > 0) {
+      allProducts = updatedProducts;
+      applyFiltersAndSort();
+    }
+  });
+
 });
