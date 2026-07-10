@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!--
+  WISHLIST PAGE
+  =============
+  This page shows all products the user has saved 
+  ("hearted") for later. Users can:
+  - View saved items in a grid
+  - Move items to cart
+  - Remove items from wishlist
+  - Clear the entire wishlist
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wishlist — FalconX</title>
+  <meta name="description" content="View your saved items and move them to cart on FalconX.">
+
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/wishlist.css">
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo" style="display: flex; align-items: center; gap: 8px;">
+        <img src="images/logo.jpg" alt="FalconX Logo" class="logo-img" style="height: 32px; width: 32px; object-fit: cover; border-radius: 6px;">
+        <span class="logo-text"><span>FalconX</span></span>
+      </a>
+
+      <div class="nav-search">
+        <input type="text" id="navbarSearchInput" placeholder="Search products...">
+        <button class="nav-search-btn" id="navbarSearchBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="categories.html">Categories</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="wishlist.html" class="nav-icon" id="navWishlist">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          <span class="nav-badge hidden" id="wishlistBadge">0</span>
+        </a>
+        <a href="cart.html" class="nav-icon" id="navCart">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          <span class="nav-badge hidden" id="cartBadge">0</span>
+        </a>
+        <a href="login.html" class="nav-icon" id="navUser">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        </a>
+      </div>
+
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="menu-overlay" id="menuOverlay"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-search">
+      <input type="text" placeholder="Search products...">
+    </div>
+    <div class="mobile-menu-links">
+      <a href="index.html">Home</a>
+      <a href="categories.html">Categories</a>
+      <a href="products.html">Products</a>
+      <a href="cart.html">Cart</a>
+      <a href="wishlist.html">Wishlist</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html">Login / Signup</a>
+    </div>
+  </div>
+
+
+  <!-- MAIN CONTENT -->
+  <main class="wishlist-page">
+    <div class="container">
+
+      <!--
+        Wishlist Header: Title + Clear All button
+        The item count and clear button only show when
+        there are items in the wishlist.
+      -->
+      <div class="wishlist-header" id="wishlistHeader">
+        <h1>My Wishlist <span id="wishlistCount">(0 items)</span></h1>
+        <button class="wishlist-clear-btn" id="clearWishlistBtn">🗑️ Clear All</button>
+      </div>
+
+      <!--
+        Wishlist Grid: Product cards are injected here by JS.
+        If empty, an "empty state" message is shown instead.
+      -->
+      <div class="wishlist-grid" id="wishlistGrid">
+        <!-- Dynamically filled by wishlist.js -->
+      </div>
+
+    </div>
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container text-center" style="text-align: center; color: var(--text-muted); font-size: var(--fs-sm);">
+      <p>&copy; 2026 FalconX. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="js/global.js"></script>
+  <script src="js/wishlist.js"></script>
+</body>
+</html>

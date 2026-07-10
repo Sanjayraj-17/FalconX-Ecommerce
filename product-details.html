@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details — FalconX</title>
+  
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/product-details.css">
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo" style="display: flex; align-items: center; gap: 8px;">
+        <img src="images/logo.jpg" alt="FalconX Logo" class="logo-img" style="height: 32px; width: 32px; object-fit: cover; border-radius: 6px;">
+        <span class="logo-text"><span>FalconX</span></span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="categories.html">Categories</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="wishlist.html" class="nav-icon" id="navWishlist">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          <span class="nav-badge hidden" id="wishlistBadge">0</span>
+        </a>
+        <a href="cart.html" class="nav-icon" id="navCart">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          <span class="nav-badge hidden" id="cartBadge">0</span>
+        </a>
+        <a href="login.html" class="nav-icon" id="navUser">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        </a>
+      </div>
+
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="menu-overlay" id="menuOverlay"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-links">
+      <a href="index.html">Home</a>
+      <a href="categories.html">Categories</a>
+      <a href="products.html">Products</a>
+      <a href="cart.html">Cart</a>
+      <a href="wishlist.html">Wishlist</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html">Login / Signup</a>
+    </div>
+  </div>
+
+
+  <!-- MAIN CONTENT -->
+  <main class="product-details-page">
+    <div class="container" id="productContainer">
+      
+      <!-- Content injected via JS. This is the skeleton shown before data loads -->
+      <div class="product-overview">
+        <!-- Left: Image Gallery -->
+        <div class="product-gallery">
+          <div class="main-image" id="mainImage">📦</div>
+          <div class="thumbnail-list">
+            <div class="thumbnail active">📦</div>
+            <div class="thumbnail">📦</div>
+            <div class="thumbnail">📦</div>
+          </div>
+        </div>
+
+        <!-- Right: Info Panel -->
+        <div class="product-info-panel">
+          <div class="pd-category" id="pdCategory">Loading...</div>
+          <h1 class="pd-title" id="pdTitle">Loading Product...</h1>
+          
+          <div class="pd-rating">
+            <span class="pd-stars" id="pdStars">★★★★★</span>
+            <span class="pd-review-count" id="pdReviews">(0 reviews)</span>
+          </div>
+
+          <div class="pd-price-block">
+            <span class="pd-price" id="pdPrice">₹0</span>
+            <span class="pd-old-price" id="pdOldPrice"></span>
+            <span class="pd-badge hidden" id="pdBadge">SALE</span>
+          </div>
+
+          <p class="pd-description" id="pdDescription">
+            Please wait while we load the product details...
+          </p>
+
+          <div class="pd-options">
+            <!-- Quantity Selector -->
+            <div class="option-group">
+              <span class="option-title">Quantity</span>
+              <div class="quantity-selector">
+                <button class="qty-btn" id="qtyMinus">-</button>
+                <input type="number" class="qty-input" id="qtyInput" value="1" min="1" max="10">
+                <button class="qty-btn" id="qtyPlus">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="pd-actions">
+            <button class="btn btn-primary btn-add-cart" id="addToCartBtn">Add to Cart</button>
+            <button class="btn-wishlist" id="addToWishlistBtn" aria-label="Add to wishlist">♡</button>
+          </div>
+
+          <div class="pd-features">
+            <div class="feature-item">
+              <div class="feature-icon">🚚</div>
+              <span>Free Delivery on orders over ₹999</span>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">🛡️</div>
+              <span>1 Year Warranty included</span>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">↩️</div>
+              <span>30-Day Return Policy</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs Section (Description, Reviews) -->
+      <div class="pd-tabs-section">
+        <div class="tabs-header">
+          <button class="tab-btn active" data-target="descTab">Description</button>
+          <button class="tab-btn" data-target="specsTab">Specifications</button>
+          <button class="tab-btn" data-target="reviewsTab">Reviews</button>
+        </div>
+        
+        <div class="tab-content active" id="descTab">
+          Detailed product description will go here...
+        </div>
+        <div class="tab-content" id="specsTab">
+          <ul>
+            <li>Brand: FalconX Exclusive</li>
+            <li>Material: Premium Quality</li>
+            <li>Condition: New</li>
+          </ul>
+        </div>
+        <div class="tab-content" id="reviewsTab">
+          <p>No reviews yet. Be the first to review this product!</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container text-center" style="text-align: center; color: var(--text-muted); font-size: var(--fs-sm);">
+      <p>&copy; 2026 FalconX. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="js/global.js"></script>
+  <script src="js/product-details.js"></script>
+</body>
+</html>

@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<!--
+  DOCTYPE tells the browser: "This is a modern HTML5 document."
+  Without it, browsers might display things weirdly.
+-->
+<html lang="en">
+<!--
+  <html> is the ROOT element — everything goes inside it.
+  lang="en" tells search engines and screen readers
+  that this page is in English.
+-->
+
+<head>
+  <!--
+    <head> contains META information about the page.
+    This stuff is NOT visible on the page itself,
+    but it's crucial for browsers, search engines, and social media.
+  -->
+
+  <!-- Character encoding: supports all languages and emojis -->
+  <meta charset="UTF-8">
+
+  <!-- Makes the website responsive on mobile devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Page title - shows in the browser tab -->
+  <title>FalconX — Premium Online Shopping</title>
+
+  <!-- SEO: Description shown in Google search results -->
+  <meta name="description" content="Discover premium products at unbeatable prices. Shop electronics, fashion, accessories and more at FalconX.">
+
+  <!-- Link to our CSS files (order matters!) -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/home.css">
+</head>
+
+<body>
+  <!--
+    <body> contains everything VISIBLE on the page.
+    Users see only what's inside <body>.
+  -->
+
+
+  <!-- ===== LOADING SCREEN =====
+       Shows a spinner while the page loads.
+       JavaScript will hide it once everything is ready. -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loader"></div>
+    <p>Loading FalconX...</p>
+  </div>
+
+
+  <!-- ===== NAVIGATION BAR =====
+       The menu at the top. Contains logo, search, links, and icons.
+       <nav> is a semantic HTML5 tag meaning "navigation". -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+
+      <!-- Logo -->
+      <a href="index.html" class="nav-logo" id="navLogo" style="display: flex; align-items: center; gap: 8px;">
+        <img src="images/logo.jpg" alt="FalconX Logo" class="logo-img" style="height: 32px; width: 32px; object-fit: cover; border-radius: 6px;">
+        <span class="logo-text"><span>FalconX</span></span>
+      </a>
+
+      <!-- Search Bar -->
+      <div class="nav-search">
+        <input type="text" id="searchInput" placeholder="Search for products, brands...">
+        <button class="nav-search-btn" id="searchBtn" aria-label="Search">
+          <!-- SVG = Scalable Vector Graphics (an icon drawn with code) -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Navigation Links -->
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="categories.html">Categories</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <!-- Action Icons -->
+      <div class="nav-actions">
+        <!-- Wishlist Icon -->
+        <a href="wishlist.html" class="nav-icon" id="navWishlist" aria-label="Wishlist">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+          <span class="nav-badge hidden" id="wishlistBadge">0</span>
+        </a>
+
+        <!-- Cart Icon -->
+        <a href="cart.html" class="nav-icon" id="navCart" aria-label="Cart">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span class="nav-badge hidden" id="cartBadge">0</span>
+        </a>
+
+        <!-- User/Profile Icon -->
+        <a href="login.html" class="nav-icon" id="navUser" aria-label="Account">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Hamburger Menu (shows on mobile only) -->
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu (hidden by default, slides in on mobile) -->
+  <div class="menu-overlay" id="menuOverlay"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-search">
+      <input type="text" placeholder="Search products...">
+    </div>
+    <div class="mobile-menu-links">
+      <a href="index.html">Home</a>
+      <a href="categories.html">Categories</a>
+      <a href="products.html">Products</a>
+      <a href="cart.html">Cart</a>
+      <a href="wishlist.html">Wishlist</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html">Login / Signup</a>
+    </div>
+  </div>
+
+
+  <!-- ============================================
+       MAIN CONTENT STARTS HERE
+       ============================================ -->
+  <main>
+
+    <!-- ===== HERO SECTION =====
+         The big eye-catching banner area. -->
+    <section class="hero" id="hero">
+      <!-- Floating glowing orbs for visual effect -->
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+      <div class="hero-orb hero-orb-3"></div>
+
+      <div class="container">
+        <!-- Left side: Text content -->
+        <div class="hero-content">
+          <div class="hero-badge">✨ New Season Collection 2026</div>
+
+          <h1 class="hero-title">
+            Discover <span class="gradient-text">Premium</span> Products For Every Lifestyle
+          </h1>
+
+          <p class="hero-description">
+            Shop the latest trends in electronics, fashion, and accessories with exclusive deals and free shipping on orders over ₹999.
+          </p>
+
+          <div class="hero-buttons">
+            <a href="products.html" class="btn btn-primary">
+              Shop Now →
+            </a>
+            <a href="#deals" class="btn btn-secondary">
+              View Deals
+            </a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="hero-stat-item">
+              <div class="hero-stat-number">10K+</div>
+              <div class="hero-stat-label">Products</div>
+            </div>
+            <div class="hero-stat-item">
+              <div class="hero-stat-number">5K+</div>
+              <div class="hero-stat-label">Happy Customers</div>
+            </div>
+            <div class="hero-stat-item">
+              <div class="hero-stat-number">99%</div>
+              <div class="hero-stat-label">Satisfaction</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right side: Visual product card -->
+        <div class="hero-visual">
+          <div class="hero-card hero-card-main">
+            <div class="hero-card-image" style="overflow: hidden; background: none;">
+              <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=80" alt="ProBuds X1" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">
+            </div>
+            <div class="hero-card-name">ProBuds X1 Wireless</div>
+            <div class="hero-card-rating">★★★★★ (4.9)</div>
+            <div class="hero-card-price">₹2,999</div>
+            <a href="products.html" class="btn btn-primary" style="width:100%;">Buy Now</a>
+          </div>
+
+          <!-- Small floating accent cards -->
+          <div class="hero-float-card card-top">
+            <div class="float-icon green">🚚</div>
+            <span>Free Shipping</span>
+          </div>
+          <div class="hero-float-card card-bottom">
+            <div class="float-icon purple">🔒</div>
+            <span>Secure Payments</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== CATEGORIES SECTION ===== -->
+    <section class="section" id="categories">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Browse</span>
+          <h2 class="section-title">Shop by Category</h2>
+          <p class="section-subtitle">Find exactly what you're looking for</p>
+        </div>
+
+        <div class="categories-grid">
+          <a href="products.html?category=electronics" class="category-card">
+            <span class="category-icon">💻</span>
+            <h3 class="category-name">Electronics</h3>
+            <p class="category-count">320+ Products</p>
+          </a>
+          <a href="products.html?category=fashion" class="category-card">
+            <span class="category-icon">👕</span>
+            <h3 class="category-name">Fashion</h3>
+            <p class="category-count">580+ Products</p>
+          </a>
+          <a href="products.html?category=accessories" class="category-card">
+            <span class="category-icon">⌚</span>
+            <h3 class="category-name">Accessories</h3>
+            <p class="category-count">240+ Products</p>
+          </a>
+          <a href="products.html?category=Home%20%26%20Living" class="category-card">
+            <span class="category-icon">🏠</span>
+            <h3 class="category-name">Home & Living</h3>
+            <p class="category-count">190+ Products</p>
+          </a>
+          <a href="products.html?category=sports" class="category-card">
+            <span class="category-icon">⚽</span>
+            <h3 class="category-name">Sports</h3>
+            <p class="category-count">150+ Products</p>
+          </a>
+          <a href="products.html?category=books" class="category-card">
+            <span class="category-icon">📚</span>
+            <h3 class="category-name">Books</h3>
+            <p class="category-count">430+ Products</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== FEATURED PRODUCTS SECTION ===== -->
+    <section class="section" id="featured">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Trending</span>
+          <h2 class="section-title">Featured Products</h2>
+          <p class="section-subtitle">Handpicked just for you</p>
+        </div>
+
+        <!-- Products will be loaded dynamically by JavaScript.
+             For now, we have a few hardcoded cards.
+             Later, these will come from Local Storage! -->
+        <div class="products-grid" id="featuredProducts">
+
+          <!-- Product Card 1 -->
+          <div class="product-card" onclick="location.href='product-details.html?id=1'">
+            <div class="product-image" style="background: linear-gradient(135deg, #1a1040, #2d1b69);">
+              <span class="product-badge">-20%</span>
+              <div class="product-actions">
+                <button class="product-action-btn" title="Add to Wishlist">♡</button>
+                <button class="product-action-btn" title="Quick View">👁</button>
+              </div>
+              <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=80" alt="ProBuds X1 Wireless Headphones" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit; display: block;">
+            </div>
+            <div class="product-info">
+              <p class="product-category">Electronics</p>
+              <h3 class="product-name">ProBuds X1 Wireless Headphones</h3>
+              <div class="product-rating">
+                <span class="product-stars">★★★★★</span>
+                <span class="product-rating-count">(128)</span>
+              </div>
+              <div class="product-price-row">
+                <div>
+                  <span class="product-price">₹2,999</span>
+                  <span class="product-old-price">₹3,799</span>
+                </div>
+                <button class="product-cart-btn" title="Add to Cart">+</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Card 2 -->
+          <div class="product-card" onclick="location.href='product-details.html?id=2'">
+            <div class="product-image" style="background: linear-gradient(135deg, #0f2027, #203a43);">
+              <div class="product-actions">
+                <button class="product-action-btn" title="Add to Wishlist">♡</button>
+                <button class="product-action-btn" title="Quick View">👁</button>
+              </div>
+              <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=80" alt="Chrono Smart Watch Pro" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit; display: block;">
+            </div>
+            <div class="product-info">
+              <p class="product-category">Accessories</p>
+              <h3 class="product-name">Chrono Smart Watch Pro</h3>
+              <div class="product-rating">
+                <span class="product-stars">★★★★☆</span>
+                <span class="product-rating-count">(89)</span>
+              </div>
+              <div class="product-price-row">
+                <div>
+                  <span class="product-price">₹4,499</span>
+                </div>
+                <button class="product-cart-btn" title="Add to Cart">+</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Card 3 -->
+          <div class="product-card" onclick="location.href='product-details.html?id=3'">
+            <div class="product-image" style="background: linear-gradient(135deg, #1a0a2e, #3a1c71);">
+              <span class="product-badge">-35%</span>
+              <div class="product-actions">
+                <button class="product-action-btn" title="Add to Wishlist">♡</button>
+                <button class="product-action-btn" title="Quick View">👁</button>
+              </div>
+              <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&auto=format&fit=crop&q=80" alt="AeroRun Ultra Sports Shoes" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit; display: block;">
+            </div>
+            <div class="product-info">
+              <p class="product-category">Sports</p>
+              <h3 class="product-name">AeroRun Ultra Sports Shoes</h3>
+              <div class="product-rating">
+                <span class="product-stars">★★★★★</span>
+                <span class="product-rating-count">(256)</span>
+              </div>
+              <div class="product-price-row">
+                <div>
+                  <span class="product-price">₹3,299</span>
+                  <span class="product-old-price">₹4,999</span>
+                </div>
+                <button class="product-cart-btn" title="Add to Cart">+</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Card 4 -->
+          <div class="product-card" onclick="location.href='product-details.html?id=4'">
+            <div class="product-image" style="background: linear-gradient(135deg, #1a1a0a, #2d2b1b);">
+              <div class="product-actions">
+                <button class="product-action-btn" title="Add to Wishlist">♡</button>
+                <button class="product-action-btn" title="Quick View">👁</button>
+              </div>
+              <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500&auto=format&fit=crop&q=80" alt="Elite Leather Crossbody Bag" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit; display: block;">
+            </div>
+            <div class="product-info">
+              <p class="product-category">Fashion</p>
+              <h3 class="product-name">Elite Leather Crossbody Bag</h3>
+              <div class="product-rating">
+                <span class="product-stars">★★★★☆</span>
+                <span class="product-rating-count">(67)</span>
+              </div>
+              <div class="product-price-row">
+                <div>
+                  <span class="product-price">₹1,899</span>
+                </div>
+                <button class="product-cart-btn" title="Add to Cart">+</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== DEALS / PROMO BANNER ===== -->
+    <section class="section" id="deals">
+      <div class="container">
+        <div class="deals-banner">
+          <div class="deals-content">
+            <span class="deals-label">🔥 Limited Time</span>
+            <h2 class="deals-title">Summer Sale Up To 50% Off</h2>
+            <p class="deals-description">Don't miss out on our biggest sale of the year. Exclusive deals on premium products.</p>
+            <a href="products.html" class="btn btn-accent">Shop the Sale →</a>
+          </div>
+
+          <!-- Countdown Timer -->
+          <div class="countdown" id="countdown">
+            <div class="countdown-item">
+              <span class="countdown-number" id="countDays">07</span>
+              <span class="countdown-label">Days</span>
+            </div>
+            <div class="countdown-item">
+              <span class="countdown-number" id="countHours">12</span>
+              <span class="countdown-label">Hours</span>
+            </div>
+            <div class="countdown-item">
+              <span class="countdown-number" id="countMins">45</span>
+              <span class="countdown-label">Mins</span>
+            </div>
+            <div class="countdown-item">
+              <span class="countdown-number" id="countSecs">30</span>
+              <span class="countdown-label">Secs</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== NEWSLETTER SECTION ===== -->
+    <section class="newsletter" id="newsletter">
+      <div class="container">
+        <div class="newsletter-box">
+          <h2 class="newsletter-title">Stay in the Loop</h2>
+          <p class="newsletter-text">Subscribe to get exclusive offers, new arrivals, and insider-only discounts.</p>
+          <form class="newsletter-form" id="newsletterForm">
+            <input type="email" placeholder="Enter your email address" required id="newsletterEmail">
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Column 1: Brand Info -->
+        <div class="footer-brand">
+          <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 8px;">
+            <img src="images/logo.jpg" alt="FalconX Logo" style="height: 28px; width: 28px; object-fit: cover; border-radius: 4px;">
+            <span>FalconX</span>
+          </a>
+          <p>Your premium destination for quality products. We bring you the best in electronics, fashion, and lifestyle — all at unbeatable prices.</p>
+          <div class="footer-socials">
+            <a href="#" aria-label="Twitter">𝕏</a>
+            <a href="#" aria-label="Instagram">📷</a>
+            <a href="#" aria-label="Facebook">f</a>
+            <a href="#" aria-label="YouTube">▶</a>
+          </div>
+        </div>
+
+        <!-- Column 2: Quick Links -->
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="categories.html">Categories</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="admin/login.html">🛡️ Admin Panel</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Customer Service -->
+        <div class="footer-col">
+          <h4>Customer Service</h4>
+          <ul>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Shipping Info</a></li>
+            <li><a href="#">Returns</a></li>
+            <li><a href="#">Track Order</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: Contact -->
+        <div class="footer-col">
+          <h4>Contact Us</h4>
+          <ul>
+            <li><a href="mailto:rajsanjay4813@gmail.com">rajsanjay4813@gmail.com</a></li>
+            <li><a href="tel:+911234567890">+91 12345 67890</a></li>
+            <li><a href="#">Madurai, Tamil Nadu</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="footer-bottom">
+        <p>&copy; 2026 FalconX. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ===== TOAST NOTIFICATION CONTAINER =====
+       Toasts (popup messages) will be added here by JavaScript -->
+  <div class="toast-container" id="toastContainer"></div>
+
+
+  <!-- ===== JAVASCRIPT FILES =====
+       Scripts go at the END of body so the HTML loads first.
+       If scripts are in the <head>, they'd run before the
+       HTML exists — and would break! -->
+  <script src="js/global.js"></script>
+  <script src="js/home.js"></script>
+
+</body>
+</html>

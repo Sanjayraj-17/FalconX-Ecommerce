@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<!--
+  PROFILE PAGE
+  ============
+  This page shows the logged-in user's account info
+  and their order history.
+  
+  If the user is NOT logged in, it shows a message
+  asking them to log in first.
+  
+  LEFT COLUMN: User avatar, name, email, join date, logout
+  RIGHT COLUMN: Order history cards
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile — FalconX</title>
+  <meta name="description" content="Manage your FalconX account, view order history, and update your profile.">
+
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/profile.css">
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo" style="display: flex; align-items: center; gap: 8px;">
+        <img src="images/logo.jpg" alt="FalconX Logo" class="logo-img" style="height: 32px; width: 32px; object-fit: cover; border-radius: 6px;">
+        <span class="logo-text"><span>FalconX</span></span>
+      </a>
+
+      <div class="nav-search">
+        <input type="text" id="navbarSearchInput" placeholder="Search products...">
+        <button class="nav-search-btn" id="navbarSearchBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="categories.html">Categories</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="wishlist.html" class="nav-icon" id="navWishlist">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          <span class="nav-badge hidden" id="wishlistBadge">0</span>
+        </a>
+        <a href="cart.html" class="nav-icon" id="navCart">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          <span class="nav-badge hidden" id="cartBadge">0</span>
+        </a>
+        <a href="login.html" class="nav-icon" id="navUser">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        </a>
+      </div>
+
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="menu-overlay" id="menuOverlay"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-search">
+      <input type="text" placeholder="Search products...">
+    </div>
+    <div class="mobile-menu-links">
+      <a href="index.html">Home</a>
+      <a href="categories.html">Categories</a>
+      <a href="products.html">Products</a>
+      <a href="cart.html">Cart</a>
+      <a href="wishlist.html">Wishlist</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html">Login / Signup</a>
+    </div>
+  </div>
+
+
+  <!-- MAIN CONTENT -->
+  <main class="profile-page">
+    <div class="container" id="profileContainer">
+      <!-- Entire profile content injected by profile.js -->
+      <!-- If logged in: shows profile layout -->
+      <!-- If NOT logged in: shows login prompt -->
+    </div>
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container text-center" style="text-align: center; color: var(--text-muted); font-size: var(--fs-sm);">
+      <p>&copy; 2026 FalconX. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="js/global.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

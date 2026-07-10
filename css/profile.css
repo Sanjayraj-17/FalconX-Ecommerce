@@ -1,0 +1,335 @@
+/* =====================================================
+   SHOPVERSE - Profile Page Styles
+   =====================================================
+   PURPOSE: Styles for the user profile page. It has
+   TWO main sections:
+   - Account Info Card (name, email, join date)
+   - Order History (list of past orders)
+   ===================================================== */
+
+
+/* =========================================
+   PROFILE PAGE LAYOUT
+   ========================================= */
+.profile-page {
+  padding-top: calc(80px + var(--space-2xl));
+  padding-bottom: var(--space-3xl);
+  min-height: 100vh;
+}
+
+.profile-title {
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xl);
+}
+
+.profile-layout {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  /* LEFT: user info card (fixed) | RIGHT: orders (flexible) */
+  gap: var(--space-2xl);
+  align-items: start;
+}
+
+
+/* =========================================
+   USER INFO CARD (LEFT SIDEBAR)
+   ========================================= */
+.profile-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2xl);
+  text-align: center;
+  position: sticky;
+  top: 100px;
+}
+
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: white;
+  margin: 0 auto var(--space-lg);
+  font-weight: 700;
+  box-shadow: var(--shadow-md);
+}
+
+.profile-name {
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
+}
+
+.profile-email {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  margin-bottom: var(--space-lg);
+  word-break: break-all;
+}
+
+.profile-meta {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid var(--border-light);
+  padding-top: var(--space-lg);
+}
+
+.profile-meta li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-sm) 0;
+  font-size: var(--fs-sm);
+}
+
+.profile-meta li .label {
+  color: var(--text-muted);
+}
+
+.profile-meta li .value {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.profile-logout-btn {
+  width: 100%;
+  padding: var(--space-sm) var(--space-lg);
+  margin-top: var(--space-xl);
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: var(--radius-md);
+  color: #ef4444;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--trans-fast);
+}
+
+.profile-logout-btn:hover {
+  background: #ef4444;
+  color: white;
+  border-color: #ef4444;
+}
+
+
+/* =========================================
+   ORDER HISTORY (RIGHT SECTION)
+   ========================================= */
+.orders-section h2 {
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-lg);
+}
+
+.order-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-md);
+  transition: all var(--trans-base);
+}
+
+.order-card:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--border-light);
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.order-id {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 0.5px;
+}
+
+.order-date {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+.order-status {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.order-status.delivered {
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.order-status.processing {
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.order-status.confirmed {
+  background: rgba(17, 17, 17, 0.05);
+  color: var(--primary);
+  border: 1px solid rgba(17, 17, 17, 0.15);
+}
+
+/* Items within an order */
+.order-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm) 0;
+}
+
+.order-item-image {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, #F3F4F6, #E5E7EB);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.order-item-name {
+  flex: 1;
+  font-size: var(--fs-sm);
+  color: var(--text-primary);
+}
+
+.order-item-qty {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+.order-item-price {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  flex-shrink: 0;
+}
+
+.order-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--border-light);
+}
+
+.order-total-label {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+.order-total-value {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Empty orders state */
+.no-orders {
+  text-align: center;
+  padding: var(--space-3xl) var(--space-xl);
+}
+
+.no-orders-icon {
+  font-size: 4rem;
+  margin-bottom: var(--space-lg);
+  opacity: 0.6;
+}
+
+.no-orders h3 {
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.no-orders p {
+  font-size: var(--fs-base);
+  color: var(--text-muted);
+  margin-bottom: var(--space-xl);
+}
+
+
+/* =========================================
+   NOT LOGGED IN STATE
+   ========================================= */
+.login-prompt {
+  text-align: center;
+  padding: var(--space-3xl);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.login-prompt-icon {
+  font-size: 5rem;
+  margin-bottom: var(--space-lg);
+  opacity: 0.6;
+}
+
+.login-prompt h2 {
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.login-prompt p {
+  font-size: var(--fs-base);
+  color: var(--text-muted);
+  margin-bottom: var(--space-xl);
+}
+
+
+/* =========================================
+   RESPONSIVE DESIGN
+   ========================================= */
+@media (max-width: 992px) {
+  .profile-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-card {
+    position: static;
+  }
+}
+
+@media (max-width: 576px) {
+  .order-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<!--
+  ADMIN DASHBOARD
+  ===============
+  The main admin panel with 3 sections (switched via sidebar):
+  1. Dashboard — Stats overview (revenue, orders, products, users)
+  2. Products — Add/Edit/Delete products in the store
+  3. Orders — View and manage customer orders
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — FalconX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="sidebar-logo" style="display: flex; align-items: center; gap: 8px; justify-content: center;">
+      <img src="../images/logo.jpg" alt="FalconX Logo" class="logo-img" style="height: 28px; width: 28px; object-fit: cover; border-radius: 4px;">
+      Falcon<span>X</span>
+    </div>
+
+    <nav class="sidebar-nav" id="sidebarNav">
+      <a href="#" class="active" data-page="dashboard">
+        <span class="nav-icon">📊</span> Dashboard
+      </a>
+      <a href="#" data-page="products">
+        <span class="nav-icon">📦</span> Products
+      </a>
+      <a href="#" data-page="orders">
+        <span class="nav-icon">🛒</span> Orders
+      </a>
+      <a href="#" data-page="messages">
+        <span class="nav-icon">💬</span> Messages
+      </a>
+      <a href="#" data-page="settings">
+        <span class="nav-icon">⚙️</span> Site Settings
+      </a>
+      <a href="../index.html">
+        <span class="nav-icon">🏠</span> View Store
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="#" id="adminLogoutBtn">🚪 Logout</a>
+    </div>
+  </aside>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main class="admin-main">
+
+    <!-- Header -->
+    <div class="admin-header">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+        <h1 id="pageTitle">Dashboard</h1>
+      </div>
+      <div class="admin-header-actions">
+        <div class="admin-user-badge">
+          <div class="avatar">A</div>
+          <span>Admin</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PAGE 1: DASHBOARD ===== -->
+    <div class="admin-page active" id="page-dashboard">
+
+      <!-- Stats Cards -->
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-card">
+          <div class="stat-icon revenue">💰</div>
+          <div class="stat-info">
+            <h3>Total Revenue</h3>
+            <div class="stat-value" id="statRevenue">₹0</div>
+            <div class="stat-change up">↑ From orders</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orders">📋</div>
+          <div class="stat-info">
+            <h3>Total Orders</h3>
+            <div class="stat-value" id="statOrders">0</div>
+            <div class="stat-change up">↑ All time</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon products">📦</div>
+          <div class="stat-info">
+            <h3>Products</h3>
+            <div class="stat-value" id="statProducts">0</div>
+            <div class="stat-change info">In catalog</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon users">👥</div>
+          <div class="stat-info">
+            <h3>Registered Users</h3>
+            <div class="stat-value" id="statUsers">0</div>
+            <div class="stat-change up">↑ Growing</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Orders Table -->
+      <div class="admin-section">
+        <div class="admin-section-header">
+          <h2>Recent Orders</h2>
+        </div>
+        <div id="dashboardRecentOrders">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PAGE 2: PRODUCTS ===== -->
+    <div class="admin-page" id="page-products">
+      <div class="admin-section">
+        <div class="admin-section-header">
+          <h2>All Products</h2>
+          <button class="btn-admin btn-admin-primary" id="addProductBtn">+ Add Product</button>
+        </div>
+        <div id="productsTableContainer">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PAGE 3: ORDERS ===== -->
+    <div class="admin-page" id="page-orders">
+      <div class="admin-section">
+        <div class="admin-section-header">
+          <h2>All Orders</h2>
+        </div>
+        <div id="ordersTableContainer">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PAGE 4: MESSAGES ===== -->
+    <div class="admin-page" id="page-messages">
+      <div class="admin-section">
+        <div class="admin-section-header">
+          <h2>Customer Messages</h2>
+        </div>
+        <div id="messagesTableContainer">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PAGE 5: SITE SETTINGS ===== -->
+    <div class="admin-page" id="page-settings">
+      <!-- Contact Info Settings -->
+      <div class="admin-section">
+        <div class="admin-section-header">
+          <h2>Contact Information</h2>
+          <button class="btn-admin btn-admin-primary" id="saveContactBtn">💾 Save Changes</button>
+        </div>
+        <div class="form-row">
+          <div class="form-group-admin">
+            <label for="settingEmail">Store Email</label>
+            <input type="email" id="settingEmail" placeholder="rajsanjay4813@gmail.com">
+          </div>
+          <div class="form-group-admin">
+            <label for="settingPhone">Phone Number</label>
+            <input type="text" id="settingPhone" placeholder="+91 12345 67890">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group-admin">
+            <label for="settingAddress">Address</label>
+            <input type="text" id="settingAddress" placeholder="Madurai, Tamil Nadu">
+          </div>
+          <div class="form-group-admin">
+            <label for="settingHours">Business Hours</label>
+            <input type="text" id="settingHours" placeholder="Mon-Sat, 10 AM - 7 PM">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group-admin" style="grid-column: span 2;">
+            <label for="settingWeb3Key">Web3Forms Access Key (To receive contact messages in your email)</label>
+            <input type="text" id="settingWeb3Key" placeholder="Get a free key from web3forms.com and paste here">
+            <small style="color: var(--text-secondary); display: block; margin-top: 4px;">
+              Get a free key instantly from <a href="https://web3forms.com/" target="_blank" style="color: var(--primary); text-decoration: underline;">web3forms.com</a>.
+            </small>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group-admin">
+            <label for="settingUpiId">UPI ID (For dynamic QR code generation)</label>
+            <input type="text" id="settingUpiId" placeholder="e.g. rajsanjay4813@ybl">
+          </div>
+          <div class="form-group-admin">
+            <label for="settingCustomQrUrl">Custom QR Code Image (URL or Upload)</label>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="settingCustomQrUrl" placeholder="e.g. https://... or local image path" style="flex: 1;">
+              <input type="file" id="settingQrFile" accept="image/*" style="display: none;">
+              <button type="button" class="btn-admin btn-admin-secondary" onclick="document.getElementById('settingQrFile').click()" style="white-space: nowrap; padding: 0 16px;">Upload QR</button>
+            </div>
+            <span id="settingQrFileName" style="font-size: 0.8rem; color: var(--primary); display: block; margin-top: 4px;"></span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group-admin" style="grid-column: span 2;">
+            <label for="settingRazorpayKey">Razorpay Key ID (For real checkout payment gateway)</label>
+            <input type="text" id="settingRazorpayKey" placeholder="e.g. rzp_test_xxxxxxxxxxxxxx or rzp_live_xxxxxxxxxxxxxx">
+            <small style="color: var(--text-secondary); display: block; margin-top: 4px;">
+              Get a free Test or Live Key from your Razorpay Dashboard. Leave empty to use the built-in payment simulators.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <!-- About Page Settings -->
+      <div class="admin-section">
+        <div class="admin-section-header">
+          <h2>About Page Content</h2>
+          <button class="btn-admin btn-admin-primary" id="saveAboutBtn">💾 Save Changes</button>
+        </div>
+        <div class="form-group-admin">
+          <label for="settingAboutTitle">Page Title</label>
+          <input type="text" id="settingAboutTitle" placeholder="The Story Behind ShopVerse">
+        </div>
+        <div class="form-group-admin">
+          <label for="settingAboutSubtitle">Subtitle</label>
+          <input type="text" id="settingAboutSubtitle" placeholder="We're on a mission to...">
+        </div>
+        <div class="form-group-admin">
+          <label for="settingAboutStory">Our Story (paragraph)</label>
+          <textarea id="settingAboutStory" rows="5" placeholder="ShopVerse was born in 2026..."></textarea>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ========== PRODUCT MODAL ========== -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modalTitle">Add New Product</h2>
+        <button class="modal-close" id="modalCloseBtn">&times;</button>
+      </div>
+
+      <div class="form-group-admin">
+        <label for="prodName">Product Name *</label>
+        <input type="text" id="prodName" placeholder="e.g. ProBuds X1 Wireless">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group-admin">
+          <label for="prodPrice">Price (₹) *</label>
+          <input type="number" id="prodPrice" placeholder="2999">
+        </div>
+        <div class="form-group-admin">
+          <label for="prodOldPrice">Old Price (₹)</label>
+          <input type="number" id="prodOldPrice" placeholder="3799">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group-admin">
+          <label for="prodCategory">Category *</label>
+          <select id="prodCategory">
+            <option value="">Select Category</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Fashion">Fashion</option>
+            <option value="Accessories">Accessories</option>
+            <option value="Sports">Sports</option>
+            <option value="Home & Living">Home & Living</option>
+            <option value="Books">Books</option>
+          </select>
+        </div>
+        <div class="form-group-admin">
+          <label for="prodRating">Rating (1-5)</label>
+          <input type="number" id="prodRating" min="1" max="5" step="0.1" placeholder="4.5">
+        </div>
+      </div>
+
+      <div class="form-group-admin">
+        <label for="prodImage">Image Emoji or URL</label>
+        <input type="text" id="prodImage" placeholder="🎧 or https://...">
+        <div style="margin-top: 8px; display: flex; align-items: center; gap: 10px;">
+          <span style="color: var(--admin-text-muted); font-size: 0.85rem;">or</span>
+          <label for="prodImageFile" class="btn-admin btn-admin-secondary" style="margin: 0; padding: 6px 12px; font-size: 0.8rem; cursor: pointer; display: inline-block;">
+            📤 Upload HD Image
+          </label>
+          <input type="file" id="prodImageFile" accept="image/*" style="display: none;">
+          <span id="prodImageFileName" style="font-size: 0.8rem; color: var(--admin-text-muted); max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">No file chosen</span>
+        </div>
+        <div id="prodImagePreview" style="margin-top: 10px; display: none; width: 60px; height: 60px; border-radius: var(--admin-radius-sm); border: 1px solid var(--admin-border); overflow: hidden; background: var(--admin-surface-2);">
+          <img src="" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+      </div>
+
+      <div class="form-group-admin">
+        <label for="prodDescription">Description</label>
+        <textarea id="prodDescription" placeholder="A short product description..."></textarea>
+      </div>
+
+      <input type="hidden" id="prodEditId">
+
+      <div class="modal-actions">
+        <button class="btn-admin btn-admin-secondary" id="modalCancelBtn">Cancel</button>
+        <button class="btn-admin btn-admin-primary" id="saveProductBtn">Save Product</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-toast-container" id="adminToastContainer"></div>
+
+  <script src="js/admin.js"></script>
+
+</body>
+</html>

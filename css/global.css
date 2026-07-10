@@ -1,0 +1,813 @@
+/* =====================================================
+   SHOPVERSE - Global Stylesheet
+   =====================================================
+   PURPOSE: This file controls the overall look of the
+   ENTIRE website. Every single page will load this file.
+   
+   WHAT'S INSIDE:
+   1. Google Fonts import (custom font)
+   2. CSS Variables (reusable color/size values)
+   3. CSS Reset (remove browser defaults)
+   4. Base styles (body, links, buttons)
+   5. Navbar (top navigation menu)
+   6. Footer (bottom section)
+   7. Toast notifications (popup messages)
+   8. Loading screen (spinner animation)
+   9. Utility classes (reusable helpers)
+   ===================================================== */
+
+
+/* ===== 1. GOOGLE FONTS =====
+   Fonts are the "handwriting style" of your website.
+   We import 'Inter' - a clean, modern font used by
+   companies like GitHub and Figma.
+   Without this, the browser uses boring default fonts. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+
+/* ===== 2. CSS VARIABLES (Custom Properties) =====
+   Variables are like "labeled boxes" that store values.
+   Instead of typing a color code everywhere, we store
+   it once and reuse it. If we want to change a color,
+   we change it in ONE place and it updates everywhere!
+   
+   We define them inside :root {} which means they're
+   available to the entire page. */
+:root {
+  /* -- Brand Colors -- */
+  --primary: #111111;                        /* Main brand color (Premium Black) */
+  --primary-light: #374151;                  /* Lighter version (Dark charcoal) */
+  --primary-dark: #000000;                   /* Darker version (Pure black) */
+  --primary-glow: rgba(17, 17, 17, 0.08);    /* Transparent glow effect */
+
+  --accent: #3B82F6;                         /* Accent color (Stripe Blue) */
+  --accent-light: #60A5FA;
+
+  /* -- Background Colors (Light Theme) -- */
+  --bg-primary: #F8F9FA;      /* Main page background */
+  --bg-secondary: #FFFFFF;    /* Header, sidebar, and section background */
+  --bg-card: #FFFFFF;         /* Card background */
+  --bg-card-hover: #F9FAFB;   /* Card hover state */
+  --bg-input: #FFFFFF;        /* Input field background */
+
+  /* -- Text Colors -- */
+  --text-primary: #111827;    /* Main text (Slate 900) */
+  --text-secondary: #4B5563;  /* Secondary text (Slate 600) */
+  --text-muted: #9CA3AF;      /* Faded text (Slate 400) */
+
+  /* -- Border & Surface -- */
+  --border-color: #E5E7EB;    /* Fine light gray border */
+  --border-light: #F3F4F6;    /* Very light gray outline */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+
+  /* -- Status Colors -- */
+  --success: #10B981;
+  --error: #EF4444;
+  --warning: #F59E0B;
+  --info: #3B82F6;
+
+  /* -- Font Sizes -- */
+  --fs-xs: 0.75rem;     /* 12px */
+  --fs-sm: 0.875rem;    /* 14px */
+  --fs-base: 1rem;      /* 16px */
+  --fs-lg: 1.125rem;    /* 18px */
+  --fs-xl: 1.25rem;     /* 20px */
+  --fs-2xl: 1.5rem;     /* 24px */
+  --fs-3xl: 2rem;       /* 32px */
+  --fs-4xl: 2.5rem;     /* 40px */
+  --fs-5xl: 3.25rem;    /* 52px */
+
+  /* -- Spacing -- */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-4xl: 6rem;
+
+  /* -- Border Radius (how rounded corners are) -- */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;   /* Fully circular */
+
+  /* -- Shadows -- */
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.05);
+  --shadow-glow: 0 0 20px var(--primary-glow);
+
+  /* -- Transitions (animation speed) -- */
+  --trans-fast: 150ms ease;
+  --trans-base: 250ms ease;
+  --trans-slow: 400ms ease;
+
+  /* -- Layout -- */
+  --max-width: 1280px;
+  --nav-height: 70px;
+}
+
+
+/* ===== 3. CSS RESET =====
+   Every browser (Chrome, Firefox, Edge) adds its own
+   default styles — like margins and padding. This "reset"
+   removes ALL defaults so our website looks the same
+   everywhere. Like clearing a canvas before painting. */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* box-sizing: border-box means when you set width: 200px,
+     the padding and border are INCLUDED in that 200px.
+     Without this, they'd be ADDED to it (making it wider). */
+}
+
+
+/* ===== 4. BASE STYLES ===== */
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;   /* Smooth scrolling for anchor links */
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;         /* vh = viewport height (full screen) */
+  overflow-x: hidden;        /* Prevent horizontal scroll */
+}
+
+/* Custom scrollbar to match our light theme */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Remove default link underlines */
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color var(--trans-fast);
+}
+
+/* Remove default button styles */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+/* Images should never overflow */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Remove list bullets */
+ul, ol { list-style: none; }
+
+/* Container - centers content with a max width */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+
+/* ===== 5. NAVIGATION BAR =====
+   The navbar sits at the very top of every page.
+   It contains: Logo | Search Bar | Links | Icons
+   It is "fixed" so it stays visible when scrolling. */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--nav-height);
+  z-index: 1000;          /* z-index controls stacking order */
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);       /* Frosted glass effect! */
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-color);
+  transition: background var(--trans-base);
+}
+
+/* When the user scrolls, JS adds this class for solid bg */
+.navbar.scrolled {
+  background: rgba(255, 255, 255, 0.97);
+}
+
+.nav-container {
+  max-width: var(--max-width);
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+  display: flex;              /* Flexbox lays items in a row */
+  align-items: center;        /* Vertically center everything */
+  gap: var(--space-lg);       /* Space between flex children */
+}
+
+/* -- Logo -- */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--fs-xl);
+  font-weight: 800;
+  color: var(--text-primary);
+  flex-shrink: 0;             /* Logo never gets squished */
+}
+
+.nav-logo .logo-icon {
+  font-size: 1.6rem;
+}
+
+.nav-logo .logo-text span {
+  background: linear-gradient(135deg, var(--primary-light), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* -- Search Bar -- */
+.nav-search {
+  flex: 1;                    /* Takes up remaining space */
+  max-width: 480px;
+  position: relative;
+}
+
+.nav-search input {
+  width: 100%;
+  padding: 10px 44px 10px 16px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: var(--fs-sm);
+  outline: none;
+  transition: border-color var(--trans-fast), box-shadow var(--trans-fast);
+}
+
+.nav-search input::placeholder {
+  color: var(--text-muted);
+}
+
+.nav-search input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+.nav-search-btn {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary);
+  border-radius: var(--radius-full);
+  color: white;
+  transition: background var(--trans-fast);
+}
+
+.nav-search-btn:hover {
+  background: var(--primary-light);
+}
+
+.nav-search-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* -- Navigation Links -- */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.nav-links a {
+  padding: 8px 16px;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-radius: var(--radius-md);
+  transition: color var(--trans-fast), background var(--trans-fast);
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--text-primary);
+  background: var(--glass-bg);
+}
+
+.nav-links a.active {
+  color: var(--primary-light);
+}
+
+/* -- Action Icons (Cart, Wishlist, Profile) -- */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.nav-icon {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  transition: color var(--trans-fast), background var(--trans-fast);
+}
+
+.nav-icon:hover {
+  color: var(--text-primary);
+  background: var(--glass-bg);
+}
+
+.nav-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* Small number badge on cart/wishlist icons */
+.nav-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  min-width: 18px;
+  height: 18px;
+  background: var(--primary);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+/* Hide badge when count is 0 */
+.nav-badge.hidden { display: none; }
+
+/* -- Hamburger Menu (mobile only) -- */
+.hamburger {
+  display: none;             /* Hidden on desktop */
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.hamburger span {
+  width: 22px;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: all var(--trans-base);
+}
+
+/* Animate hamburger to "X" when open */
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+
+/* ===== 6. FOOTER =====
+   The footer appears at the bottom of every page.
+   It contains links, contact info, and copyright. */
+.footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  padding: var(--space-4xl) 0 var(--space-xl);
+  margin-top: var(--space-4xl);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: var(--space-3xl);
+  margin-bottom: var(--space-3xl);
+}
+
+.footer-brand .logo {
+  font-size: var(--fs-xl);
+  font-weight: 800;
+  margin-bottom: var(--space-md);
+  display: inline-block;
+}
+
+.footer-brand .logo span {
+  background: linear-gradient(135deg, var(--primary-light), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.footer-brand p {
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+  line-height: 1.7;
+  margin-bottom: var(--space-lg);
+}
+
+.footer-socials {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.footer-socials a {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: var(--fs-lg);
+  transition: all var(--trans-fast);
+}
+
+.footer-socials a:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.footer-col h4 {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-primary);
+  margin-bottom: var(--space-lg);
+}
+
+.footer-col ul li {
+  margin-bottom: var(--space-sm);
+}
+
+.footer-col ul a {
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+  transition: color var(--trans-fast), padding-left var(--trans-fast);
+}
+
+.footer-col ul a:hover {
+  color: var(--primary-light);
+  padding-left: 4px;
+}
+
+.footer-bottom {
+  border-top: 1px solid var(--border-color);
+  padding-top: var(--space-xl);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.footer-bottom p {
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+
+.footer-bottom-links {
+  display: flex;
+  gap: var(--space-lg);
+}
+
+.footer-bottom-links a {
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+
+.footer-bottom-links a:hover {
+  color: var(--primary-light);
+}
+
+
+/* ===== 7. TOAST NOTIFICATIONS =====
+   Toasts are small popup messages that appear briefly.
+   Example: "Item added to cart!" or "Login failed!" */
+.toast-container {
+  position: fixed;
+  top: 90px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: 14px 20px;
+  min-width: 280px;
+  max-width: 400px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  animation: toastIn 0.35s ease forwards;
+  border-left: 4px solid var(--primary);
+}
+
+.toast.success { border-left-color: var(--success); }
+.toast.error   { border-left-color: var(--error); }
+.toast.warning { border-left-color: var(--warning); }
+
+.toast-icon {
+  font-size: var(--fs-xl);
+  flex-shrink: 0;
+}
+
+.toast-message {
+  font-size: var(--fs-sm);
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.toast-close {
+  color: var(--text-muted);
+  font-size: var(--fs-lg);
+  cursor: pointer;
+  padding: 4px;
+  transition: color var(--trans-fast);
+}
+
+.toast-close:hover { color: var(--text-primary); }
+
+.toast.removing {
+  animation: toastOut 0.3s ease forwards;
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes toastOut {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(40px); }
+}
+
+
+/* ===== 8. LOADING SCREEN =====
+   A full-screen spinner shown while the page loads. */
+.loading-screen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.loading-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader {
+  width: 44px;
+  height: 44px;
+  border: 3px solid var(--border-light);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.loading-screen p {
+  margin-top: var(--space-md);
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+
+/* ===== 9. COMMON BUTTON STYLES ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 12px 28px;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  border-radius: var(--radius-lg);
+  transition: all var(--trans-base);
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+.btn-primary:hover {
+  background: var(--primary-light);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-light);
+}
+.btn-secondary:hover {
+  border-color: var(--primary);
+  color: var(--primary-light);
+  background: rgba(17, 17, 17, 0.04);
+}
+
+.btn-accent {
+  background: var(--accent);
+  color: #000;
+}
+.btn-accent:hover {
+  background: var(--accent-light);
+  transform: translateY(-2px);
+}
+
+
+/* ===== 10. SECTION TITLES ===== */
+.section {
+  padding: var(--space-4xl) 0;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: var(--space-3xl);
+}
+
+.section-tag {
+  display: inline-block;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--primary-light);
+  background: rgba(17, 17, 17, 0.06);
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-md);
+}
+
+.section-title {
+  font-size: var(--fs-3xl);
+  font-weight: 800;
+  margin-bottom: var(--space-sm);
+}
+
+.section-subtitle {
+  color: var(--text-secondary);
+  font-size: var(--fs-base);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+
+/* ===== 11. RESPONSIVE DESIGN =====
+   @media queries change styles based on screen width.
+   This makes our site work on phones and tablets too! */
+
+/* Tablet (1024px and below) */
+@media (max-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl);
+  }
+}
+
+/* Mobile (768px and below) */
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 60px;
+  }
+
+  .nav-search { display: none; }
+  .nav-links { display: none; }
+
+  .hamburger { display: flex; }
+
+  /* Mobile menu slides in from right */
+  .mobile-menu {
+    position: fixed;
+    top: var(--nav-height);
+    right: -100%;
+    width: 280px;
+    height: calc(100vh - var(--nav-height));
+    background: var(--bg-secondary);
+    border-left: 1px solid var(--border-color);
+    padding: var(--space-xl);
+    transition: right var(--trans-slow);
+    z-index: 999;
+    overflow-y: auto;
+  }
+
+  .mobile-menu.open { right: 0; }
+
+  .mobile-menu .mobile-search {
+    width: 100%;
+    margin-bottom: var(--space-xl);
+  }
+
+  .mobile-menu .mobile-search input {
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: var(--fs-sm);
+    outline: none;
+  }
+
+  .mobile-menu-links a {
+    display: block;
+    padding: 12px 0;
+    font-size: var(--fs-base);
+    font-weight: 500;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-color);
+    transition: color var(--trans-fast);
+  }
+
+  .mobile-menu-links a:hover {
+    color: var(--primary-light);
+  }
+
+  /* Overlay behind mobile menu */
+  .menu-overlay {
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    width: 100%;
+    height: calc(100vh - var(--nav-height));
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--trans-slow);
+  }
+
+  .menu-overlay.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .section-title { font-size: var(--fs-2xl); }
+}

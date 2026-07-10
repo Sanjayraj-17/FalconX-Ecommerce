@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<!--
+  CHECKOUT PAGE
+  =============
+  This page has TWO main parts:
+  LEFT COLUMN:
+    1. Shipping Address Form (name, phone, address, city, etc.)
+    2. Payment Method Selection (COD, UPI, Card)
+  RIGHT COLUMN:
+    3. Order Summary (items from cart + price breakdown)
+    4. Place Order button
+  
+  After the user fills the form and clicks "Place Order":
+    - The order is saved to Local Storage
+    - The cart is emptied
+    - A success popup appears with the order ID
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout — FalconX</title>
+  <meta name="description" content="Complete your order — enter shipping details and place your order on FalconX.">
+
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/checkout.css">
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo" style="display: flex; align-items: center; gap: 8px;">
+        <img src="images/logo.jpg" alt="FalconX Logo" class="logo-img" style="height: 32px; width: 32px; object-fit: cover; border-radius: 6px;">
+        <span class="logo-text"><span>FalconX</span></span>
+      </a>
+
+      <div class="nav-search">
+        <input type="text" id="navbarSearchInput" placeholder="Search products...">
+        <button class="nav-search-btn" id="navbarSearchBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="categories.html">Categories</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="wishlist.html" class="nav-icon" id="navWishlist">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          <span class="nav-badge hidden" id="wishlistBadge">0</span>
+        </a>
+        <a href="cart.html" class="nav-icon" id="navCart">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          <span class="nav-badge hidden" id="cartBadge">0</span>
+        </a>
+        <a href="login.html" class="nav-icon" id="navUser">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        </a>
+      </div>
+
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="menu-overlay" id="menuOverlay"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-search">
+      <input type="text" placeholder="Search products...">
+    </div>
+    <div class="mobile-menu-links">
+      <a href="index.html">Home</a>
+      <a href="categories.html">Categories</a>
+      <a href="products.html">Products</a>
+      <a href="cart.html">Cart</a>
+      <a href="wishlist.html">Wishlist</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html">Login / Signup</a>
+    </div>
+  </div>
+
+
+  <!-- MAIN CONTENT -->
+  <main class="checkout-page">
+    <div class="container">
+      <h1 class="checkout-title">Checkout</h1>
+
+      <div class="checkout-layout">
+        
+        <!-- LEFT COLUMN: Forms -->
+        <div class="checkout-forms">
+
+          <!-- SECTION 1: Shipping Address -->
+          <div class="checkout-section">
+            <h2 class="checkout-section-title">
+              <span class="step-number">1</span>
+              Shipping Address
+            </h2>
+
+            <form id="checkoutForm" novalidate>
+              <div class="form-grid">
+                
+                <div class="form-group">
+                  <label for="firstName">First Name <span class="required">*</span></label>
+                  <input type="text" id="firstName" placeholder="John" required>
+                  <span class="error-text" id="firstNameError">Please enter your first name</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="lastName">Last Name <span class="required">*</span></label>
+                  <input type="text" id="lastName" placeholder="Doe" required>
+                  <span class="error-text" id="lastNameError">Please enter your last name</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="phone">Phone Number <span class="required">*</span></label>
+                  <input type="tel" id="phone" placeholder="+91 98765 43210" required>
+                  <span class="error-text" id="phoneError">Please enter a valid phone number</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="email">Email <span class="required">*</span></label>
+                  <input type="email" id="email" placeholder="john@example.com" required>
+                  <span class="error-text" id="emailError">Please enter a valid email</span>
+                </div>
+
+                <div class="form-group full-width">
+                  <label for="address">Street Address <span class="required">*</span></label>
+                  <textarea id="address" placeholder="123, Main Street, Apartment 4B" required></textarea>
+                  <span class="error-text" id="addressError">Please enter your address</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="city">City <span class="required">*</span></label>
+                  <input type="text" id="city" placeholder="Mumbai" required>
+                  <span class="error-text" id="cityError">Please enter your city</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="state">State <span class="required">*</span></label>
+                  <select id="state" required>
+                    <option value="">Select State</option>
+                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                    <option value="Delhi">Delhi</option>
+                    <option value="Gujarat">Gujarat</option>
+                    <option value="Karnataka">Karnataka</option>
+                    <option value="Kerala">Kerala</option>
+                    <option value="Maharashtra">Maharashtra</option>
+                    <option value="Rajasthan">Rajasthan</option>
+                    <option value="Tamil Nadu">Tamil Nadu</option>
+                    <option value="Telangana">Telangana</option>
+                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                    <option value="West Bengal">West Bengal</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <span class="error-text" id="stateError">Please select your state</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="pincode">PIN Code <span class="required">*</span></label>
+                  <input type="text" id="pincode" placeholder="400001" maxlength="6" required>
+                  <span class="error-text" id="pincodeError">Please enter a valid 6-digit PIN code</span>
+                </div>
+
+              </div>
+            </form>
+          </div>
+
+          <!-- SECTION 2: Payment Method -->
+          <div class="checkout-section">
+            <h2 class="checkout-section-title">
+              <span class="step-number">2</span>
+              Payment Method
+            </h2>
+
+            <div class="payment-options" id="paymentOptions">
+              
+              <label class="payment-option selected" data-method="cod">
+                <input type="radio" name="payment" value="cod" checked>
+                <span class="payment-option-icon">💵</span>
+                <div class="payment-option-info">
+                  <div class="payment-option-name">Cash on Delivery</div>
+                  <div class="payment-option-desc">Pay when your order arrives at your doorstep</div>
+                </div>
+              </label>
+
+              <label class="payment-option" data-method="upi">
+                <input type="radio" name="payment" value="upi">
+                <span class="payment-option-icon">📱</span>
+                <div class="payment-option-info">
+                  <div class="payment-option-name">UPI Payment</div>
+                  <div class="payment-option-desc">Pay instantly using Google Pay, PhonePe, etc.</div>
+                </div>
+              </label>
+
+              <label class="payment-option" data-method="card">
+                <input type="radio" name="payment" value="card">
+                <span class="payment-option-icon">💳</span>
+                <div class="payment-option-info">
+                  <div class="payment-option-name">Credit / Debit Card</div>
+                  <div class="payment-option-desc">Visa, Mastercard, RuPay accepted</div>
+                </div>
+              </label>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: Order Summary -->
+        <div class="checkout-summary" id="checkoutSummary">
+          <!-- Filled by checkout.js -->
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+
+  <!-- CARD PAYMENT SIMULATOR MODAL -->
+  <div class="payment-modal-overlay" id="cardPaymentModal">
+    <div class="payment-modal card-modal">
+      <button class="payment-modal-close" id="cardModalCloseBtn">&times;</button>
+      
+      <!-- Interactive 3D Card Preview -->
+      <div class="credit-card-container">
+        <div class="credit-card" id="creditCard">
+          <!-- Front of the Card -->
+          <div class="card-side card-front">
+            <div class="card-chip"></div>
+            <div class="card-logo" id="cardBrandLogo">Visa</div>
+            <div class="card-number-display" id="cardNumberDisplay">•••• •••• •••• ••••</div>
+            <div class="card-details-row">
+              <div class="card-detail-group">
+                <span class="card-detail-label">CARD HOLDER</span>
+                <span class="card-detail-val" id="cardHolderDisplay">YOUR NAME</span>
+              </div>
+              <div class="card-detail-group">
+                <span class="card-detail-label">EXPIRES</span>
+                <span class="card-detail-val" id="cardExpiryDisplay">MM/YY</span>
+              </div>
+            </div>
+          </div>
+          <!-- Back of the Card -->
+          <div class="card-side card-back">
+            <div class="card-magnetic-strip"></div>
+            <div class="card-signature-area">
+              <span class="card-cvv-display" id="cardCvvDisplay">•••</span>
+            </div>
+            <div class="card-back-logo">FalconX</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Card Details Form -->
+      <form class="card-payment-form" id="cardPaymentForm" novalidate>
+        <h3>Enter Card Details</h3>
+        
+        <div class="form-group-payment">
+          <label for="modalCardNumber">Card Number</label>
+          <input type="text" id="modalCardNumber" maxlength="19" placeholder="4111 2222 3333 4444" required autocomplete="off">
+          <span class="payment-error" id="cardNumberError">Invalid card number</span>
+        </div>
+        
+        <div class="form-group-payment">
+          <label for="modalCardName">Cardholder Name</label>
+          <input type="text" id="modalCardName" placeholder="John Doe" required autocomplete="off">
+          <span class="payment-error" id="cardNameError">Please enter cardholder name</span>
+        </div>
+        
+        <div class="payment-form-row">
+          <div class="form-group-payment">
+            <label for="modalCardExpiry">Expiry Date</label>
+            <input type="text" id="modalCardExpiry" maxlength="5" placeholder="MM/YY" required autocomplete="off">
+            <span class="payment-error" id="cardExpiryError">Invalid expiry</span>
+          </div>
+          <div class="form-group-payment">
+            <label for="modalCardCvv">CVV</label>
+            <input type="password" id="modalCardCvv" maxlength="3" placeholder="123" required autocomplete="off">
+            <span class="payment-error" id="cardCvvError">Invalid CVV</span>
+          </div>
+        </div>
+        
+        <button type="submit" class="payment-submit-btn" id="cardSubmitBtn">
+          Pay ₹<span id="cardPayAmount">0</span>
+        </button>
+      </form>
+      
+      <!-- Mock OTP Verification Screen (Initially Hidden) -->
+      <div class="otp-verification-screen" id="otpScreen">
+        <h3>Secure OTP Verification</h3>
+        <p>A 6-digit One Time Password (OTP) has been sent to your registered mobile number ending in <span id="otpPhoneLastDigits">****</span>.</p>
+        
+        <div class="otp-inputs" id="otpInputsContainer">
+          <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]" inputmode="numeric">
+          <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]" inputmode="numeric" disabled>
+          <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]" inputmode="numeric" disabled>
+          <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]" inputmode="numeric" disabled>
+          <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]" inputmode="numeric" disabled>
+          <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]" inputmode="numeric" disabled>
+        </div>
+        <span class="payment-error" id="otpError">Invalid OTP. Please enter the correct code.</span>
+        
+        <div class="otp-timer">Resend OTP in <span id="otpCountdown">30</span>s</div>
+        
+        <button class="payment-submit-btn" id="otpVerifyBtn" disabled>Verify & Complete Payment</button>
+        <button class="otp-resend-btn" id="otpResendBtn" style="display:none;">Resend OTP</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- UPI PAYMENT SIMULATOR MODAL -->
+  <div class="payment-modal-overlay" id="upiPaymentModal">
+    <div class="payment-modal upi-modal">
+      <button class="payment-modal-close" id="upiModalCloseBtn">&times;</button>
+      
+      <h3>UPI Payment (Scan & Pay)</h3>
+      <p class="upi-subtitle">Scan this QR Code using any UPI App (Google Pay, PhonePe, Paytm, BHIM) to complete your payment.</p>
+      
+      <div class="upi-qr-container">
+        <div class="upi-qr-wrapper">
+          <img src="" id="upiQrImg" alt="UPI QR Code">
+          <div class="qr-scanner-line"></div>
+        </div>
+        <div class="upi-amount-badge">Payable: ₹<span id="upiPayAmount">0</span></div>
+      </div>
+      
+      <div class="upi-details">
+        <div class="upi-detail-row">
+          <span>Merchant Name:</span>
+          <strong>FalconX Store</strong>
+        </div>
+        <div class="upi-detail-row">
+          <span>UPI ID:</span>
+          <strong id="upiMerchantId">rajsanjay4813@ybl</strong>
+        </div>
+        <div class="upi-detail-row">
+          <span>Transaction ID:</span>
+          <span id="upiTxnId" style="font-family: monospace; font-size: 13px;">TXN1234567890</span>
+        </div>
+      </div>
+
+      <div class="upi-timer-box">
+        ⏳ Session expires in: <span id="upiTimer">05:00</span>
+      </div>
+
+      <div class="upi-divider">OR ENTER UPI ID</div>
+      
+      <div class="upi-id-form">
+        <div class="upi-input-group">
+          <input type="text" id="userUpiId" placeholder="username@upi" autocomplete="off">
+          <button class="btn-verify-upi" id="btnVerifyUpi">Verify & Pay</button>
+        </div>
+        <span class="payment-error" id="userUpiError">Invalid UPI ID structure (e.g. name@bank)</span>
+      </div>
+
+      <div style="margin-top: 25px; display: flex; flex-direction: column; gap: 10px;">
+        <button class="payment-submit-btn upi-approve-btn" id="upiApproveBtn">
+          Simulate Bank App Approval (Mock)
+        </button>
+        <p style="font-size: 11px; color: var(--text-muted); text-align: center; margin: 0;">
+          * For demo purposes, you can scan the QR code to see a real payment attempt, or click the button above to simulate successful authorization.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ORDER SUCCESS POPUP -->
+  <div class="order-success-overlay" id="orderSuccessOverlay">
+    <div class="order-success-modal">
+      <div class="success-icon">🎉</div>
+      <h2>Order Placed Successfully!</h2>
+      <p>Thank you for shopping with FalconX. Your order has been confirmed and will be delivered soon.</p>
+      <div class="order-id-display" id="successOrderId">SV-000001</div>
+      <div class="success-actions">
+        <a href="profile.html" class="btn btn-primary">View Orders</a>
+        <a href="products.html" class="btn btn-secondary">Continue Shopping</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container text-center" style="text-align: center; color: var(--text-muted); font-size: var(--fs-sm);">
+      <p>&copy; 2026 FalconX. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="js/global.js"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="js/checkout.js"></script>
+</body>
+</html>

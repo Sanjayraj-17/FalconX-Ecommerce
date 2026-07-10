@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Categories — FalconX</title>
+  <meta name="description" content="Browse FalconX product categories. Explore electronics, fashion, home decor, and accessories.">
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/categories.css">
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo" style="display: flex; align-items: center; gap: 8px;">
+        <img src="images/logo.jpg" alt="FalconX Logo" class="logo-img" style="height: 32px; width: 32px; object-fit: cover; border-radius: 6px;">
+        <span class="logo-text"><span>FalconX</span></span>
+      </a>
+      
+      <!-- Global Search -->
+      <div class="nav-search">
+        <input type="text" id="navbarSearchInput" placeholder="Search products, brands...">
+        <button class="nav-search-btn" id="navbarSearchBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+      </div>
+
+      <!-- Nav Links (With Categories set as Active) -->
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="categories.html" class="active">Categories</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <!-- Badges and Profile Actions -->
+      <div class="nav-actions">
+        <a href="wishlist.html" class="nav-icon" id="navWishlist">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          <span class="nav-badge hidden" id="wishlistBadge">0</span>
+        </a>
+        <a href="cart.html" class="nav-icon" id="navCart">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          <span class="nav-badge hidden" id="cartBadge">0</span>
+        </a>
+        <a href="login.html" class="nav-icon" id="navUser">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        </a>
+      </div>
+      
+      <!-- Hamburger Menu for mobile -->
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <!-- Mobile Navigation Overlay & Side Menu -->
+  <div class="menu-overlay" id="menuOverlay"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-search">
+      <input type="text" placeholder="Search products...">
+    </div>
+    <div class="mobile-menu-links">
+      <a href="index.html">Home</a>
+      <a href="categories.html" class="active">Categories</a>
+      <a href="products.html">Products</a>
+      <a href="cart.html">Cart</a>
+      <a href="wishlist.html">Wishlist</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html">Login / Signup</a>
+    </div>
+  </div>
+
+  <!-- ===== MAIN CONTENT CONTAINER ===== -->
+  <main>
+    <!-- Categories Page Title Header -->
+    <section class="categories-hero">
+      <div class="container">
+        <h1>Browse <span>Categories</span></h1>
+        <p>Discover premium products curated especially for your lifestyle. Select a category below to explore details.</p>
+      </div>
+    </section>
+
+    <!-- Categories Card Grid Section -->
+    <section class="categories-section">
+      <div class="container">
+        <div class="categories-grid" id="categoriesGrid">
+          <!-- Filled Dynamically by JavaScript -->
+          <!-- A loading skeleton will be injected while loading -->
+          <div class="category-card skeleton" style="height: 180px;"></div>
+          <div class="category-card skeleton" style="height: 180px;"></div>
+          <div class="category-card skeleton" style="height: 180px;"></div>
+          <div class="category-card skeleton" style="height: 180px;"></div>
+          <div class="category-card skeleton" style="height: 180px;"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 8px;">
+            <img src="images/logo.jpg" alt="FalconX Logo" style="height: 28px; width: 28px; object-fit: cover; border-radius: 4px;">
+            <span>FalconX</span>
+          </a>
+          <p>Your premium destination for quality products at unbeatable prices.</p>
+          <div class="footer-socials">
+            <a href="#">𝕏</a><a href="#">📷</a><a href="#">f</a><a href="#">▶</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="categories.html">Categories</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="admin/login.html">🛡️ Admin Panel</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Customer Service</h4>
+          <ul>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="shipping.html">Shipping Info</a></li>
+            <li><a href="returns.html">Returns</a></li>
+            <li><a href="track-order.html">Track Order</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact Us</h4>
+          <ul>
+            <li><a href="mailto:rajsanjay4813@gmail.com">rajsanjay4813@gmail.com</a></li>
+            <li><a href="tel:+911234567890">+91 12345 67890</a></li>
+            <li><a href="#">Madurai, Tamil Nadu</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 FalconX. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms-conditions.html">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast notifications -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Shared Global JS -->
+  <script src="js/global.js"></script>
+  <!-- Categories Logic JS -->
+  <script src="js/categories.js"></script>
+</body>
+</html>

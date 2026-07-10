@@ -1,0 +1,221 @@
+/* =====================================================
+   SHOPVERSE - Wishlist Page Styles
+   =====================================================
+   PURPOSE: Styles for the wishlist page.
+   The wishlist shows saved products in a grid, similar
+   to the products page but with "Move to Cart" buttons.
+   ===================================================== */
+
+
+/* =========================================
+   WISHLIST PAGE LAYOUT
+   ========================================= */
+.wishlist-page {
+  padding-top: calc(80px + var(--space-2xl));
+  padding-bottom: var(--space-3xl);
+  min-height: 100vh;
+}
+
+.wishlist-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-xl);
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.wishlist-header h1 {
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.wishlist-header h1 span {
+  font-size: var(--fs-base);
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-left: var(--space-sm);
+}
+
+.wishlist-clear-btn {
+  background: none;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  transition: all var(--trans-fast);
+}
+
+.wishlist-clear-btn:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: #ef4444;
+}
+
+
+/* =========================================
+   WISHLIST GRID
+   -----------------------------------------
+   Uses same product card structure as the
+   Products page, but adds extra action buttons.
+   ========================================= */
+.wishlist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  /* auto-fill creates as many 280px columns as fit */
+  gap: var(--space-lg);
+}
+
+
+/* =========================================
+   WISHLIST CARD
+   -----------------------------------------
+   Extends the product-card with extra buttons:
+   - "Move to Cart" button
+   - "Remove" button
+   ========================================= */
+.wishlist-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all var(--trans-base);
+  position: relative;
+}
+
+.wishlist-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.wishlist-card-image {
+  width: 100%;
+  height: 220px;
+  background: linear-gradient(135deg, #F3F4F6, #E5E7EB);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  position: relative;
+}
+
+.wishlist-remove-btn {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  width: 36px;
+  height: 36px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ef4444;
+  cursor: pointer;
+  font-size: var(--fs-lg);
+  transition: all var(--trans-fast);
+}
+
+.wishlist-remove-btn:hover {
+  background: #ef4444;
+  color: white;
+  border-color: #ef4444;
+}
+
+.wishlist-card-info {
+  padding: var(--space-lg);
+}
+
+.wishlist-card-category {
+  font-size: var(--fs-xs);
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.wishlist-card-name {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: var(--space-xs) 0 var(--space-sm);
+  line-height: 1.4;
+}
+
+.wishlist-card-price {
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.wishlist-card-old-price {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  text-decoration: line-through;
+  margin-left: var(--space-sm);
+}
+
+.wishlist-card-rating {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin: var(--space-sm) 0;
+}
+
+.wishlist-card-rating .stars {
+  color: var(--accent);
+  font-size: var(--fs-sm);
+}
+
+.wishlist-card-rating .count {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+.wishlist-card-actions {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.move-to-cart-btn {
+  flex: 1;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--trans-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+}
+
+.move-to-cart-btn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+
+/* =========================================
+   RESPONSIVE DESIGN
+   ========================================= */
+@media (max-width: 576px) {
+  .wishlist-grid {
+    grid-template-columns: 1fr;
+    /* Single column on small phones */
+  }
+
+  .wishlist-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

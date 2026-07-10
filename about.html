@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us — FalconX</title>
+  <meta name="description" content="Learn about ShopVerse — our mission, values, and the team behind your favorite online store.">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/about.css">
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo" style="display: flex; align-items: center; gap: 8px;">
+        <img src="images/logo.jpg" alt="FalconX Logo" class="logo-img" style="height: 32px; width: 32px; object-fit: cover; border-radius: 6px;">
+        <span class="logo-text"><span>FalconX</span></span>
+      </a>
+      <div class="nav-search">
+        <input type="text" placeholder="Search products...">
+        <button class="nav-search-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="categories.html">Categories</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="wishlist.html" class="nav-icon" id="navWishlist">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          <span class="nav-badge hidden" id="wishlistBadge">0</span>
+        </a>
+        <a href="cart.html" class="nav-icon" id="navCart">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          <span class="nav-badge hidden" id="cartBadge">0</span>
+        </a>
+        <a href="login.html" class="nav-icon" id="navUser">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        </a>
+      </div>
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="menu-overlay" id="menuOverlay"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-search"><input type="text" placeholder="Search products..."></div>
+    <div class="mobile-menu-links">
+      <a href="index.html">Home</a>
+      <a href="categories.html">Categories</a>
+      <a href="products.html">Products</a>
+      <a href="cart.html">Cart</a>
+      <a href="wishlist.html">Wishlist</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html">Login / Signup</a>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <!-- Hero -->
+    <section class="about-hero">
+      <div class="container">
+        <div class="about-badge">About Us</div>
+        <h1 id="aboutTitle">The Story Behind <span>FalconX</span></h1>
+        <p class="about-hero-desc" id="aboutSubtitle">We're on a mission to make premium products accessible to everyone — with fast shipping, unbeatable prices, and a shopping experience you'll love.</p>
+      </div>
+    </section>
+
+    <!-- Our Story -->
+    <section class="about-section">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-image-box">🏪</div>
+          <div class="about-text">
+            <h2>Our Story</h2>
+            <p id="aboutStory">FalconX was born in 2026 in the vibrant city of Madurai, Tamil Nadu with a simple idea — what if online shopping could be both premium and affordable? We noticed that quality products often came with hefty price tags, and affordable options lacked the polish customers deserved.</p>
+            <p>So we built FalconX — a curated marketplace that bridges the gap between luxury and value. Every product in our catalog is handpicked for quality, and every price is set to make you smile.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Our Values -->
+    <section class="about-section">
+      <div class="container">
+        <div class="section-header" style="text-align:center;">
+          <span class="section-tag" style="display:inline-block;padding:6px 18px;border-radius:50px;background:rgba(124,92,252,0.12);color:var(--primary);font-size:var(--fs-sm);font-weight:600;text-transform:uppercase;letter-spacing:0.1em;">Why ShopVerse</span>
+          <h2 style="font-size:var(--fs-2xl);font-weight:700;margin-top:12px;color:var(--text-primary);">Our Core Values</h2>
+        </div>
+        <div class="values-grid" id="valuesGrid">
+          <div class="value-card">
+            <div class="value-icon">🎯</div>
+            <h3>Quality First</h3>
+            <p>Every product is vetted for quality. We only sell what we'd proudly use ourselves.</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">💰</div>
+            <h3>Fair Pricing</h3>
+            <p>Premium doesn't mean expensive. We negotiate directly with brands to get you the best deals.</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">🚀</div>
+            <h3>Fast Delivery</h3>
+            <p>Free shipping on orders over ₹999 with express delivery options across India.</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">🛡️</div>
+            <h3>Secure Shopping</h3>
+            <p>Your data is encrypted and protected. Shop with complete peace of mind.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team -->
+    <section class="about-section" style="padding-bottom:80px;">
+      <div class="container">
+        <div class="section-header" style="text-align:center;">
+          <span class="section-tag" style="display:inline-block;padding:6px 18px;border-radius:50px;background:rgba(124,92,252,0.12);color:var(--primary);font-size:var(--fs-sm);font-weight:600;text-transform:uppercase;letter-spacing:0.1em;">The Creator</span>
+          <h2 style="font-size:var(--fs-2xl);font-weight:700;margin-top:12px;color:var(--text-primary);">Meet the Creator of ShopVerse</h2>
+        </div>
+        <div class="team-grid" id="teamGrid" style="display: flex; justify-content: center;">
+          <div class="team-card" style="max-width: 380px; width: 100%; padding: 40px var(--space-xl);">
+            <div class="team-avatar">SR</div>
+            <h3>Sanjay Raj</h3>
+            <p class="team-role" style="margin-bottom: var(--space-md);">Founder, Owner & Lead Developer</p>
+            <p class="team-bio" style="font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.6; margin: 0;">
+              The designer, developer, and visionary behind ShopVerse, dedicated to crafting a premium, user-friendly e-commerce experience.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 8px;">
+            <img src="images/logo.jpg" alt="FalconX Logo" style="height: 28px; width: 28px; object-fit: cover; border-radius: 4px;">
+            <span>FalconX</span>
+          </a>
+          <p>Your premium destination for quality products at unbeatable prices.</p>
+          <div class="footer-socials">
+            <a href="#">𝕏</a><a href="#">📷</a><a href="#">f</a><a href="#">▶</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="categories.html">Categories</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="admin/login.html">🛡️ Admin Panel</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Customer Service</h4>
+          <ul>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Shipping Info</a></li>
+            <li><a href="#">Returns</a></li>
+            <li><a href="#">Track Order</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact Us</h4>
+          <ul>
+            <li><a href="mailto:rajsanjay4813@gmail.com">rajsanjay4813@gmail.com</a></li>
+            <li><a href="tel:+911234567890">+91 12345 67890</a></li>
+            <li><a href="#">Madurai, Tamil Nadu</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 FalconX. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="js/global.js"></script>
+  <script>
+    // Load admin-edited About content from Local Storage
+    var aboutData = JSON.parse(localStorage.getItem('shopverse_siteAbout'));
+    if (aboutData) {
+      if (aboutData.title) document.getElementById('aboutTitle').innerHTML = aboutData.title;
+      if (aboutData.subtitle) document.getElementById('aboutSubtitle').textContent = aboutData.subtitle;
+      if (aboutData.story) document.getElementById('aboutStory').textContent = aboutData.story;
+    }
+  </script>
+</body>
+</html>

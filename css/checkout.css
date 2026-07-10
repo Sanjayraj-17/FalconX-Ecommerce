@@ -1,0 +1,1056 @@
+/* =====================================================
+   SHOPVERSE - Checkout Page Styles
+   =====================================================
+   PURPOSE: Styles for the checkout page. The checkout
+   has a TWO-COLUMN layout:
+   - LEFT: Shipping address form + Payment method
+   - RIGHT: Order summary (items + totals)
+   ===================================================== */
+
+
+/* =========================================
+   CHECKOUT PAGE LAYOUT
+   ========================================= */
+.checkout-page {
+  padding-top: calc(80px + var(--space-2xl));
+  padding-bottom: var(--space-3xl);
+  min-height: 100vh;
+}
+
+.checkout-title {
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xl);
+}
+
+.checkout-layout {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  /* LEFT: flexible form area | RIGHT: fixed summary */
+  gap: var(--space-2xl);
+  align-items: start;
+}
+
+
+/* =========================================
+   CHECKOUT SECTIONS (Shared Card Style)
+   -----------------------------------------
+   Both the address form and payment section
+   use the same card styling.
+   ========================================= */
+.checkout-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-lg);
+}
+
+.checkout-section-title {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.checkout-section-title .step-number {
+  width: 28px;
+  height: 28px;
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+
+/* =========================================
+   FORM GRID
+   -----------------------------------------
+   The address form uses a 2-column grid so
+   fields like "First Name" and "Last Name"
+   sit side by side.
+   ========================================= */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.form-grid .full-width {
+  /* Some fields (like Address) span both columns */
+  grid-column: 1 / -1;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.form-group label {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.3px;
+}
+
+.form-group label .required {
+  /* The little red asterisk (*) next to required fields */
+  color: #ef4444;
+  margin-left: 2px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: var(--fs-base);
+  font-family: inherit;
+  transition: all var(--trans-fast);
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.05);
+}
+
+.form-group input.error,
+.form-group select.error {
+  border-color: #ef4444;
+}
+
+.form-group .error-text {
+  font-size: var(--fs-xs);
+  color: #ef4444;
+  display: none;
+}
+
+.form-group .error-text.visible {
+  display: block;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+
+/* =========================================
+   PAYMENT METHOD SELECTION
+   -----------------------------------------
+   Radio-button cards that let the user pick
+   COD, UPI, or Card payment.
+   ========================================= */
+.payment-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--trans-fast);
+}
+
+.payment-option:hover {
+  border-color: rgba(17, 17, 17, 0.2);
+}
+
+.payment-option.selected {
+  border-color: var(--primary);
+  background: rgba(17, 17, 17, 0.02);
+}
+
+.payment-option input[type="radio"] {
+  accent-color: var(--primary);
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.payment-option-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.payment-option-info {
+  flex: 1;
+}
+
+.payment-option-name {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.payment-option-desc {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+
+/* =========================================
+   ORDER SUMMARY (RIGHT SIDEBAR)
+   ========================================= */
+.checkout-summary {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  position: sticky;
+  top: 100px;
+}
+
+.checkout-summary h3 {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* Mini cart items in the summary */
+.checkout-item {
+  display: flex;
+  gap: var(--space-md);
+  padding: var(--space-sm) 0;
+  align-items: center;
+}
+
+.checkout-item-image {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #F3F4F6, #E5E7EB);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.checkout-item-info {
+  flex: 1;
+  min-width: 0;
+  /* Allows text truncation */
+}
+
+.checkout-item-name {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.checkout-item-qty {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+.checkout-item-price {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--text-primary);
+  flex-shrink: 0;
+}
+
+.checkout-divider {
+  border: none;
+  border-top: 1px solid var(--border-light);
+  margin: var(--space-md) 0;
+}
+
+/* Summary price rows */
+.checkout-row {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-xs) 0;
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+}
+
+.checkout-row.total {
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  padding-top: var(--space-md);
+  margin-top: var(--space-sm);
+  border-top: 2px solid var(--border-light);
+}
+
+.checkout-row .green {
+  color: #22c55e;
+}
+
+.place-order-btn {
+  width: 100%;
+  padding: var(--space-md) var(--space-xl);
+  margin-top: var(--space-lg);
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--fs-base);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--trans-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  letter-spacing: 0.5px;
+}
+
+.place-order-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+
+.place-order-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.secure-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  margin-top: var(--space-md);
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+
+/* =========================================
+   ORDER SUCCESS MODAL
+   -----------------------------------------
+   A popup shown after placing an order.
+   ========================================= */
+.order-success-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--trans-base);
+}
+
+.order-success-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.order-success-modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  padding: var(--space-3xl) var(--space-2xl);
+  text-align: center;
+  max-width: 480px;
+  width: 90%;
+  transform: scale(0.8);
+  transition: transform var(--trans-base);
+}
+
+.order-success-overlay.show .order-success-modal {
+  transform: scale(1);
+}
+
+.success-icon {
+  font-size: 4rem;
+  margin-bottom: var(--space-lg);
+  animation: bounceIn 0.6s ease;
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.order-success-modal h2 {
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.order-success-modal p {
+  font-size: var(--fs-base);
+  color: var(--text-muted);
+  margin-bottom: var(--space-lg);
+  line-height: 1.6;
+}
+
+.order-id-display {
+  display: inline-block;
+  padding: var(--space-sm) var(--space-lg);
+  background: rgba(17, 17, 17, 0.05);
+  border: 1px solid rgba(17, 17, 17, 0.15);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-base);
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 1px;
+  margin-bottom: var(--space-xl);
+}
+
+.success-actions {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.success-actions .btn {
+  padding: var(--space-sm) var(--space-xl);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--trans-fast);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+
+/* =========================================
+   RESPONSIVE DESIGN
+   ========================================= */
+@media (max-width: 992px) {
+  .checkout-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-summary {
+    position: static;
+  }
+}
+
+@media (max-width: 576px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+    /* Single column form on mobile */
+  }
+
+  .payment-option {
+    padding: var(--space-sm) var(--space-md);
+  }
+}
+
+
+/* =========================================
+   INTERACTIVE PAYMENT MODAL STYLES
+   ========================================= */
+.payment-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: var(--space-md);
+  overflow-y: auto;
+}
+
+.payment-modal-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.payment-modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  transform: scale(0.9);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+}
+
+.payment-modal-overlay.show .payment-modal {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.payment-modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-light);
+  border-radius: 50%;
+  color: var(--text-primary);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--trans-fast);
+  z-index: 10;
+}
+
+.payment-modal-close:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+
+.payment-modal h3 {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-md);
+  text-align: center;
+}
+
+/* Modal Form Groups */
+.form-group-payment {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+  position: relative;
+}
+
+.form-group-payment label {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-group-payment input {
+  padding: 12px var(--space-md);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: var(--fs-base);
+  font-family: inherit;
+  outline: none;
+  transition: all var(--trans-fast);
+}
+
+.form-group-payment input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.05);
+}
+
+.form-group-payment input.error {
+  border-color: #ef4444;
+}
+
+.payment-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.payment-error {
+  font-size: var(--fs-xs);
+  color: #ef4444;
+  display: none;
+  margin-top: 2px;
+}
+
+.payment-error.visible {
+  display: block;
+}
+
+.payment-submit-btn {
+  width: 100%;
+  padding: 14px var(--space-lg);
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--fs-base);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--trans-base);
+  margin-top: var(--space-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  box-shadow: var(--shadow-md);
+}
+
+.payment-submit-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-glow);
+}
+
+.payment-submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+
+/* =========================================
+   3D CREDIT CARD PREVIEW
+   ========================================= */
+.credit-card-container {
+  perspective: 1000px;
+  width: 100%;
+  max-width: 320px;
+  height: 190px;
+  margin: var(--space-md) auto var(--space-xl) auto;
+}
+
+.credit-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.credit-card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-side {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.card-front {
+  background: linear-gradient(135deg, #111111, #2d2d2d, #111111);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.card-back {
+  background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transform: rotateY(180deg);
+  padding: var(--space-lg) 0;
+}
+
+/* Card Elements Front */
+.card-chip {
+  width: 40px;
+  height: 30px;
+  background: linear-gradient(135deg, #ffd700, #b8860b);
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-chip::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+}
+
+.card-logo {
+  position: absolute;
+  top: var(--space-lg);
+  right: var(--space-lg);
+  font-size: var(--fs-lg);
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: 0.5px;
+}
+
+.card-number-display {
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  word-spacing: 4px;
+  font-family: 'Courier New', Courier, monospace;
+  margin: var(--space-md) 0;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.card-details-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.card-detail-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-detail-label {
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+}
+
+.card-detail-val {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Card Elements Back */
+.card-magnetic-strip {
+  width: 100%;
+  height: 40px;
+  background: #000;
+  margin-top: 10px;
+}
+
+.card-signature-area {
+  width: 80%;
+  height: 35px;
+  background: #e2e8f0;
+  margin-left: 5%;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: var(--space-sm);
+  color: #0f172a;
+}
+
+.card-cvv-display {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  letter-spacing: 1px;
+  font-style: italic;
+}
+
+.card-back-logo {
+  text-align: right;
+  padding-right: var(--space-lg);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+
+/* =========================================
+   OTP SCREEN
+   ========================================= */
+.otp-verification-screen {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.otp-verification-screen h3 {
+  color: var(--text-primary);
+  font-size: var(--fs-lg);
+  margin-bottom: var(--space-xs);
+}
+
+.otp-verification-screen p {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: var(--space-lg);
+}
+
+.otp-inputs {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: center;
+  margin-bottom: var(--space-md);
+}
+
+.otp-digit {
+  width: 44px;
+  height: 48px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  text-align: center;
+  outline: none;
+  transition: all var(--trans-fast);
+}
+
+.otp-digit:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.05);
+}
+
+.otp-digit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.otp-timer {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  margin-bottom: var(--space-lg);
+}
+
+.otp-resend-btn {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: var(--space-xs);
+}
+
+
+/* =========================================
+   UPI SCAN & PAY
+   ========================================= */
+.upi-subtitle {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.5;
+  margin-top: -5px;
+  margin-bottom: var(--space-lg);
+}
+
+.upi-qr-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--space-lg);
+}
+
+.upi-qr-wrapper {
+  width: 200px;
+  height: 200px;
+  background: white;
+  border-radius: var(--radius-md);
+  padding: var(--space-sm);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upi-qr-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.qr-scanner-line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  animation: scan 3s linear infinite;
+}
+
+@keyframes scan {
+  0% { top: 0%; }
+  50% { top: 100%; }
+  100% { top: 0%; }
+}
+
+.upi-amount-badge {
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  color: var(--primary);
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: var(--fs-sm);
+  margin-top: var(--space-md);
+}
+
+.upi-details {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.upi-detail-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fs-xs);
+}
+
+.upi-detail-row span {
+  color: var(--text-muted);
+}
+
+.upi-detail-row strong {
+  color: var(--text-primary);
+}
+
+.upi-timer-box {
+  text-align: center;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: #f59e0b;
+  margin-bottom: var(--space-lg);
+}
+
+.upi-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-size: 10px;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin: var(--space-md) 0;
+  letter-spacing: 1px;
+}
+
+.upi-divider::before,
+.upi-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.upi-divider:not(:empty)::before {
+  margin-right: .5em;
+}
+
+.upi-divider:not(:empty)::after {
+  margin-left: .5em;
+}
+
+.upi-id-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.upi-input-group {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.upi-input-group input {
+  flex: 1;
+  padding: 10px var(--space-md);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: var(--fs-sm);
+  outline: none;
+  transition: all var(--trans-fast);
+}
+
+.upi-input-group input:focus {
+  border-color: var(--primary);
+}
+
+.btn-verify-upi {
+  padding: 10px var(--space-md);
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--trans-fast);
+}
+
+.btn-verify-upi:hover {
+  background: var(--primary-light);
+}
+
+.upi-approve-btn {
+  background: linear-gradient(135deg, #10b981, #059669);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.upi-approve-btn:hover {
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
