@@ -425,7 +425,7 @@ document.addEventListener('DOMContentLoaded', function () {
       phone: '+91 12345 67890',
       address: 'Madurai, Tamil Nadu, India',
       hours: 'Mon-Sat, 10 AM - 7 PM',
-      web3Key: '',
+      web3Key: '2fabea6c-ee09-4de0-bbc0-8c2e9d61a367',
       upiId: 'rajsanjay4813@ybl',
       customQrUrl: '',
       razorpayKeyId: ''
@@ -440,9 +440,9 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('settingRazorpayKey').value = contact.razorpayKeyId || '';
 
     var about = getFromStorage('shopverse_siteAbout') || {
-      title: 'The Story Behind ShopVerse',
+      title: 'The Story Behind FalconX',
       subtitle: "We're on a mission to make premium products accessible to everyone.",
-      story: 'ShopVerse was born in 2026 in the vibrant city of Madurai, Tamil Nadu with a simple idea — what if online shopping could be both premium and affordable?'
+      story: 'FalconX was born in 2026 in the vibrant city of Madurai, Tamil Nadu with a simple idea — what if online shopping could be both premium and affordable?'
     };
     document.getElementById('settingAboutTitle').value = about.title;
     document.getElementById('settingAboutSubtitle').value = about.subtitle;
