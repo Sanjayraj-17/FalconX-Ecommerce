@@ -1,93 +1,143 @@
 <!DOCTYPE html>
-<!--
-  ADMIN LOGIN PAGE
-  ================
-  This is a separate login page for store administrators.
-  Default credentials: admin@shopverse.com / admin123
-  
-  Once logged in, redirects to the admin dashboard.
--->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Login — FalconX</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Admin Portal — FalconX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/admin.css">
 </head>
-<body>
+<body class="admin-login-page">
 
-  <div class="admin-login-page">
-    <div class="admin-login-card">
-      <div class="login-logo" style="margin-bottom: 20px;">
-        <img src="../images/logo.jpg" alt="FalconX Logo" style="height: 60px; width: 60px; object-fit: cover; border-radius: 12px; margin: 0 auto; display: block;">
-      </div>
-      <h1>Admin Panel</h1>
-      <p class="login-subtitle">Sign in to manage your FalconX store</p>
+  <div class="admin-login-card">
+    <div class="login-logo">
+      <img src="../images/logo.jpg" alt="FalconX Logo">
+    </div>
+    <h1>Admin Portal</h1>
+    <p class="login-subtitle">Secure administrative access gate</p>
 
-      <div class="form-group-admin">
-        <label for="adminEmail">Email</label>
-        <input type="email" id="adminEmail" placeholder="admin@shopverse.com">
-      </div>
+    <div class="form-group-admin">
+      <label for="adminEmail">Security ID (Email)</label>
+      <input type="email" id="adminEmail" placeholder="name@domain.com" autocomplete="off" required>
+    </div>
 
-      <div class="form-group-admin">
-        <label for="adminPassword">Password</label>
-        <input type="password" id="adminPassword" placeholder="••••••••">
-      </div>
+    <div class="form-group-admin">
+      <label for="adminPassword">Access Code</label>
+      <input type="password" id="adminPassword" placeholder="••••••••" autocomplete="new-password" required>
+    </div>
 
-      <button class="btn-admin btn-admin-primary" id="adminLoginBtn">
-        Sign In to Dashboard
-      </button>
+    <button class="btn-admin" id="adminLoginBtn">
+      Verify Credentials
+    </button>
 
-      <div class="login-hint">
-        <strong>Demo Credentials:</strong><br>
-        Email: <code>admin@falconx.com</code><br>
-        Password: <code>admin123</code>
-      </div>
+    <div class="security-notice">
+      <span>🔒</span> Authorized Administrators Only
     </div>
   </div>
 
   <div class="admin-toast-container" id="adminToastContainer"></div>
 
+  <!-- Supabase Integration Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase.js"></script>
+
   <script>
-    /* ---- Admin Login Logic ---- */
-    const ADMIN_EMAIL = 'admin@falconx.com';
-    const ADMIN_PASS = 'admin123';
+    document.addEventListener('DOMContentLoaded', function () {
+      const emailInput = document.getElementById('adminEmail');
+      const passwordInput = document.getElementById('adminPassword');
+      const loginBtn = document.getElementById('adminLoginBtn');
 
-    document.getElementById('adminLoginBtn').addEventListener('click', function () {
-      const email = document.getElementById('adminEmail').value.trim();
-      const pass = document.getElementById('adminPassword').value.trim();
-
-      if (!email || !pass) {
-        showAdminToast('Please fill in all fields', 'error');
-        return;
+      // Check URL parameters for errors (e.g. redirected unauthorized attempt)
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('error') === 'unauthorized') {
+        showAdminToast('Unauthorized access.', 'error');
       }
 
-      if (email === ADMIN_EMAIL && pass === ADMIN_PASS) {
-        localStorage.setItem('shopverse_admin', JSON.stringify({ email: email, loggedIn: true }));
-        showAdminToast('Login successful! Redirecting...', 'success');
-        setTimeout(function () { window.location.href = 'index.html'; }, 1000);
-      } else {
-        showAdminToast('Invalid credentials', 'error');
+      loginBtn.addEventListener('click', async function () {
+        const email = emailInput.value.trim();
+        const pass = passwordInput.value.trim();
+
+        if (!email || !pass) {
+          showAdminToast('Please fill in all fields.', 'error');
+          return;
+        }
+
+        // Set Loading State
+        setLoading(true);
+
+        try {
+          if (!supabase) {
+            showAdminToast('Database offline. Contact system administrator.', 'error');
+            setLoading(false);
+            return;
+          }
+
+          const { data, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: pass
+          });
+
+          if (error) {
+            showAdminToast('Invalid email or password.', 'error');
+            setLoading(false);
+            return;
+          }
+
+          const user = data.user;
+          const isAdmin = user && (user.user_metadata?.role === 'admin' || user.app_metadata?.role === 'admin');
+
+          if (!isAdmin) {
+            // Immediate sign out and reject
+            await supabase.auth.signOut();
+            showAdminToast('Unauthorized access.', 'error');
+            setLoading(false);
+            return;
+          }
+
+          showAdminToast('Authorization successful. Loading session...', 'success');
+          setTimeout(function () {
+            window.location.href = 'index.html';
+          }, 1200);
+
+        } catch (err) {
+          showAdminToast('Invalid email or password.', 'error');
+          setLoading(false);
+        }
+      });
+
+      // Allow Enter key to submit
+      passwordInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          loginBtn.click();
+        }
+      });
+
+      function setLoading(isLoading) {
+        if (isLoading) {
+          loginBtn.disabled = true;
+          loginBtn.textContent = 'Verifying Authenticity...';
+          emailInput.disabled = true;
+          passwordInput.disabled = true;
+        } else {
+          loginBtn.disabled = false;
+          loginBtn.textContent = 'Verify Credentials';
+          emailInput.disabled = false;
+          passwordInput.disabled = false;
+        }
+      }
+
+      function showAdminToast(msg, type) {
+        const container = document.getElementById('adminToastContainer');
+        const toast = document.createElement('div');
+        toast.className = 'admin-toast ' + type;
+        toast.textContent = msg;
+        container.appendChild(toast);
+        setTimeout(function () {
+          toast.classList.add('removing');
+          setTimeout(function () { toast.remove(); }, 300);
+        }, 2500);
       }
     });
-
-    // Allow Enter key to submit
-    document.getElementById('adminPassword').addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') document.getElementById('adminLoginBtn').click();
-    });
-
-    function showAdminToast(msg, type) {
-      const container = document.getElementById('adminToastContainer');
-      const toast = document.createElement('div');
-      toast.className = 'admin-toast ' + type;
-      toast.textContent = msg;
-      container.appendChild(toast);
-      setTimeout(function () {
-        toast.classList.add('removing');
-        setTimeout(function () { toast.remove(); }, 300);
-      }, 2500);
-    }
   </script>
 
 </body>

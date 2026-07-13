@@ -9,13 +9,42 @@
    5. Order management (view, update status)
    ===================================================== */
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
 
   // =========================================
   // 0. AUTH GUARD — Must be logged in as admin
   // =========================================
-  const adminData = JSON.parse(localStorage.getItem('shopverse_admin'));
-  if (!adminData || !adminData.loggedIn) {
+  if (!supabase) {
+    window.location.href = 'login.html';
+    return;
+  }
+
+  try {
+    const { data: { session }, error } = await supabase.auth.getSession();
+
+    if (error || !session) {
+      window.location.href = 'login.html';
+      return;
+    }
+
+    const user = session.user;
+    const isAdmin = user && (user.user_metadata?.role === 'admin' || user.app_metadata?.role === 'admin');
+
+    if (!isAdmin) {
+      await supabase.auth.signOut();
+      window.location.href = 'login.html?error=unauthorized';
+      return;
+    }
+
+    // Remove the premium loading screen overlay once session is verified
+    const authLoader = document.getElementById('adminAuthLoader');
+    if (authLoader) {
+      authLoader.style.opacity = '0';
+      setTimeout(function () {
+        authLoader.remove();
+      }, 400);
+    }
+  } catch (err) {
     window.location.href = 'login.html';
     return;
   }
@@ -69,10 +98,12 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Logout
-  document.getElementById('adminLogoutBtn').addEventListener('click', function (e) {
+  document.getElementById('adminLogoutBtn').addEventListener('click', async function (e) {
     e.preventDefault();
-    localStorage.removeItem('shopverse_admin');
-    showAdminToast('Logged out', 'info');
+    if (supabase) {
+      await supabase.auth.signOut();
+    }
+    showAdminToast('Logged out successfully', 'info');
     setTimeout(function () { window.location.href = 'login.html'; }, 800);
   });
 
