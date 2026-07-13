@@ -9,42 +9,13 @@
    5. Order management (view, update status)
    ===================================================== */
 
-document.addEventListener('DOMContentLoaded', async function () {
+document.addEventListener('DOMContentLoaded', function () {
 
   // =========================================
   // 0. AUTH GUARD — Must be logged in as admin
   // =========================================
-  if (!supabase) {
-    window.location.href = 'login.html';
-    return;
-  }
-
-  try {
-    const { data: { session }, error } = await supabase.auth.getSession();
-
-    if (error || !session) {
-      window.location.href = 'login.html';
-      return;
-    }
-
-    const user = session.user;
-    const isAdmin = user && (user.user_metadata?.role === 'admin' || user.app_metadata?.role === 'admin');
-
-    if (!isAdmin) {
-      await supabase.auth.signOut();
-      window.location.href = 'login.html?error=unauthorized';
-      return;
-    }
-
-    // Remove the premium loading screen overlay once session is verified
-    const authLoader = document.getElementById('adminAuthLoader');
-    if (authLoader) {
-      authLoader.style.opacity = '0';
-      setTimeout(function () {
-        authLoader.remove();
-      }, 400);
-    }
-  } catch (err) {
+  const adminData = JSON.parse(localStorage.getItem('shopverse_admin'));
+  if (!adminData || !adminData.loggedIn) {
     window.location.href = 'login.html';
     return;
   }
@@ -98,12 +69,10 @@ document.addEventListener('DOMContentLoaded', async function () {
   }
 
   // Logout
-  document.getElementById('adminLogoutBtn').addEventListener('click', async function (e) {
+  document.getElementById('adminLogoutBtn').addEventListener('click', function (e) {
     e.preventDefault();
-    if (supabase) {
-      await supabase.auth.signOut();
-    }
-    showAdminToast('Logged out successfully', 'info');
+    localStorage.removeItem('shopverse_admin');
+    showAdminToast('Logged out', 'info');
     setTimeout(function () { window.location.href = 'login.html'; }, 800);
   });
 
